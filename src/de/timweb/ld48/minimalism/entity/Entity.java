@@ -6,14 +6,15 @@ import de.timweb.ld48.minimalism.util.Vector2d;
 import de.timweb.ld48.minimalism.world.World;
 
 public abstract class Entity implements Updateable, Renderable {
-	protected final double	SPEED		= 0.005;
+	protected final double	SPEED		= 0.0005;
+	protected final double	MAXSPEED	= SPEED * 100;
 
 	protected Vector2d		pos;
 	protected Vector2d		direction	= new Vector2d();
 	protected Vector2d		gravity		= new Vector2d();
 
 	private boolean			isAlive		= true;
-	private boolean			isSolid		= false;
+	private boolean			isSolid		= true;
 
 	public Entity() {
 		this(new Vector2d());
@@ -23,37 +24,42 @@ public abstract class Entity implements Updateable, Renderable {
 		this.pos = pos;
 	}
 
+	@Override
+	public void update(final int delta) {
+		World world = World.getInstance();
+		gravity.add(0, world.getGravity() * delta);
+	}
+
 	protected void move(final int delta) {
 		World world = World.getInstance();
 		Vector2d target = pos.copy();
 
-		gravity.add(0, world.getGravity() * delta);
 
 		boolean isGravityValid = true;
 		boolean isDirectionValid = true;
 
-		final int STEPS = 1;
+		final int STEPS = 2;
 		for (int i = 0; i < STEPS; i++) {
 			if (isDirectionValid) {
 				target.set(pos);
-				target.add(direction.x / STEPS, direction.y / STEPS);
+				target.add(direction.x * delta / STEPS, direction.y * delta / STEPS);
 				isDirectionValid = world.isValidPos(target);
 			}
-			if (isDirectionValid) {
+			if (isDirectionValid || !isSolid) {
 				pos.set(target);
 			}
 
-			if (isGravityValid) {
+			if (isGravityValid && isSolid) {
 				target.set(pos);
 				target.add(0, gravity.y / STEPS);
 				isGravityValid = world.isValidPos(target);
 			}
-			if (isGravityValid) {
+			if (isGravityValid && isSolid) {
 				pos.set(target);
 			}
 		}
 
-		if (!isDirectionValid)
+		if (!isDirectionValid && isSolid)
 			direction.set(0, 0);
 		if (!isGravityValid) {
 			gravity.set(0, 0);
@@ -75,7 +81,8 @@ public abstract class Entity implements Updateable, Renderable {
 			direction.x = 0;
 		if (Math.abs(direction.y) < SPEED * 4)
 			direction.y = 0;
-		System.out.println("dir: " + direction + " ---- gravity: " + gravity);
+		// System.out.println("dir: " + direction + " ---- gravity: " +
+		// gravity);
 
 	}
 

@@ -6,11 +6,11 @@ import de.timweb.ld48.minimalism.util.Vector2d;
 import de.timweb.ld48.minimalism.world.World;
 
 public class MinLevel extends Level {
-	private World			world;
-	private PlayerEntity	player	= new PlayerEntity(new Vector2d(80, 80));
+	private World	world;
 
 	public MinLevel() {
 		world = new World(World.WORLD_01);
+		player = new PlayerEntity(new Vector2d(80, 80));
 	}
 
 	@Override

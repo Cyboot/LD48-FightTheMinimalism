@@ -11,7 +11,7 @@ import de.timweb.ld48.minimalism.util.Graphics;
 public class Canvas extends java.awt.Canvas implements Runnable {
 	public static final int		WIDTH			= 1000;
 	public static final int		HEIGHT			= 600;
-	private static final long	TARGET_FPS		= 125;
+	private static final long	TARGET_FPS		= 80;
 	private static final long	TARGET_DELTA	= 1000 / TARGET_FPS;
 
 	private static Canvas		instance		= new Canvas();
@@ -31,6 +31,7 @@ public class Canvas extends java.awt.Canvas implements Runnable {
 	public void start() {
 		Thread t = new Thread(this);
 
+		Game.getInstance().restart();
 		t.start();
 	}
 

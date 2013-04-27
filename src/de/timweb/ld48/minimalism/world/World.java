@@ -1,7 +1,13 @@
 package de.timweb.ld48.minimalism.world;
 
 import java.awt.Color;
+import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.List;
 
+import de.timweb.ld48.minimalism.entity.Entity;
+import de.timweb.ld48.minimalism.entity.GrowEntity;
+import de.timweb.ld48.minimalism.entity.PushEntity;
 import de.timweb.ld48.minimalism.interfaces.Renderable;
 import de.timweb.ld48.minimalism.interfaces.Updateable;
 import de.timweb.ld48.minimalism.util.Graphics;
@@ -19,11 +25,16 @@ public class World implements Updateable, Renderable {
 	private int					offsetY		= 0;
 	private double				gravity		= 0.01;
 
+	private List<Entity>		entities	= new ArrayList<Entity>();
+
 	public World(final int level) {
 		switch (level) {
 		case WORLD_01:
 			offsetX = 50;
 			offsetY = 50;
+
+			entities.add(new PushEntity(new Vector2d(260, 337)));
+			entities.add(new GrowEntity(new Vector2d(360, 337)));
 
 			tiles = new Tile[30][40];
 			initTiles(level);
@@ -38,7 +49,7 @@ public class World implements Updateable, Renderable {
 	private void initTiles(final int level) {
 		for (int y = 0; y < tiles.length; y++) {
 			for (int x = 0; x < tiles[0].length; x++) {
-				if (RandomUtil.randBoolean(0.9))
+				if (RandomUtil.randBoolean(0.98))
 					tiles[y][x] = Tile.AIR;
 				else
 					tiles[y][x] = Tile.GROUND;
@@ -60,11 +71,17 @@ public class World implements Updateable, Renderable {
 					g.g().fillRect(x * TILE_SIZE + offsetX, y * TILE_SIZE + offsetY, TILE_SIZE, TILE_SIZE);
 			}
 		}
+
+		for (Entity e : entities) {
+			e.render(g);
+		}
 	}
 
 	@Override
 	public void update(final int delta) {
-
+		for (Entity e : entities) {
+			e.update(delta);
+		}
 	}
 
 	public static World getInstance() {
@@ -86,8 +103,23 @@ public class World implements Updateable, Renderable {
 		if (copy.x < 0 || copy.x > tiles[0].length || copy.y < 0 || copy.y > tiles.length) {
 			return false;
 		} else {
+			boolean collide = checkForSolidEntities(pos.copy());
+
 			// System.out.println("in raster: " + copy.x() + " : " + copy.y());
-			return !tiles[copy.y()][copy.x()].isSolid();
+			return !collide && !tiles[copy.y()][copy.x()].isSolid();
 		}
+	}
+
+	private boolean checkForSolidEntities(final Vector2d copy) {
+		boolean contains = false;
+
+		for (Entity e : entities) {
+			if (e instanceof GrowEntity) {
+				Rectangle collisionBox = ((GrowEntity) e).getCollisionBox();
+				contains = contains || collisionBox.contains(copy.x(), copy.y());
+			}
+		}
+
+		return contains;
 	}
 }

@@ -1,5 +1,6 @@
 package de.timweb.ld48.minimalism.game;
 
+import de.timweb.ld48.minimalism.entity.PlayerEntity;
 import de.timweb.ld48.minimalism.interfaces.Renderable;
 import de.timweb.ld48.minimalism.interfaces.Updateable;
 import de.timweb.ld48.minimalism.util.Graphics;
@@ -10,8 +11,13 @@ public class Game implements Updateable, Renderable {
 	private Level		currentLevel;
 
 	public Game() {
-		currentLevel = new MinLevel();
 	}
+
+	public void restart() {
+		currentLevel = new MinLevel();
+
+	}
+
 
 	@Override
 	public void render(final Graphics g) {
@@ -27,6 +33,14 @@ public class Game implements Updateable, Renderable {
 		}
 
 		currentLevel.update(delta);
+	}
+
+	public Level getCurrentLevel() {
+		return currentLevel;
+	}
+
+	public PlayerEntity getPlayer() {
+		return currentLevel.getPlayer();
 	}
 
 	public static Game getInstance() {

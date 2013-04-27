@@ -3,13 +3,13 @@ package de.timweb.ld48.minimalism.util;
 import java.text.DecimalFormat;
 
 public class Vector2d {
-	public double x, y;
+	public double	x, y;
 
 	public Vector2d() {
 		this(0, 0);
 	}
 
-	public Vector2d(double x, double y) {
+	public Vector2d(final double x, final double y) {
 		this.x = x;
 		this.y = y;
 	}
@@ -22,7 +22,7 @@ public class Vector2d {
 		return (int) y;
 	}
 
-	public Vector2d add(double x, double y) {
+	public Vector2d add(final double x, final double y) {
 		this.x += x;
 		this.y += y;
 		return this;
@@ -32,24 +32,24 @@ public class Vector2d {
 		return new Vector2d(x, y);
 	}
 
-	public void set(Vector2d position) {
+	public void set(final Vector2d position) {
 		x = position.x;
 		y = position.y;
 	}
 
-	public void set(double x, double y) {
+	public void set(final double x, final double y) {
 		this.x = x;
 		this.y = y;
 	}
 
-	public double distance(Vector2d other) {
+	public double distance(final Vector2d other) {
 		double dx = Math.abs(x - other.x);
 		double dy = Math.abs(y - other.y);
 
 		return Math.sqrt(dx * dx + dy * dy);
 	}
 
-	public double distance(double x, double y) {
+	public double distance(final double x, final double y) {
 		double dx = Math.abs(this.x - x);
 		double dy = Math.abs(this.y - y);
 
@@ -57,12 +57,7 @@ public class Vector2d {
 	}
 
 	public Vector2d normalize() {
-		double length = distance(0, 0);
-
-		x /= length;
-		y /= length;
-
-		return this;
+		return setLength(1);
 	}
 
 	public Vector2d flipX() {
@@ -75,6 +70,20 @@ public class Vector2d {
 		return this;
 	}
 
+	public Vector2d setLength(final double dist) {
+		double length = length();
+
+		x = dist * x / length;
+		y = dist * y / length;
+
+		return this;
+
+	}
+
+	public double length() {
+		return Math.sqrt(x * x + y * y);
+	}
+
 	public static Vector2d randomNormalized() {
 		double x = Math.random() * 2 - 1;
 		double y = Math.random() * 2 - 1;
@@ -82,10 +91,10 @@ public class Vector2d {
 		return new Vector2d(x, y).normalize();
 	}
 
+	private static DecimalFormat	df	= new DecimalFormat("#0.00");
+
 	@Override
 	public String toString() {
-		DecimalFormat df = new DecimalFormat("#0.00");
-
 		return df.format(x) + " : " + df.format(y);
 	}
 }
