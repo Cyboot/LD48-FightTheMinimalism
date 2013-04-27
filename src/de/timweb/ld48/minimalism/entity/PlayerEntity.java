@@ -1,19 +1,23 @@
 package de.timweb.ld48.minimalism.entity;
 
-import java.awt.Color;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 import de.timweb.ld48.minimalism.engine.Controls;
 import de.timweb.ld48.minimalism.util.Graphics;
+import de.timweb.ld48.minimalism.util.ImageLoader;
 import de.timweb.ld48.minimalism.util.Vector2d;
 
 public class PlayerEntity extends Entity {
-	private final int	SIZE			= 8;
+	private final int	SIZE			= 18;
 
 	private Controls	controls		= Controls.getInstance();
 
 	private Rectangle	collisionBox	= new Rectangle(0, 0, 3, 3);
 	private boolean		isJumpEnable	= true;
+
+	private int			walkCyle		= 0;
+	private boolean		left			= true;
 
 	public PlayerEntity(final Vector2d pos) {
 		super(pos);
@@ -24,9 +28,11 @@ public class PlayerEntity extends Entity {
 		super.update(delta);
 		if (controls.isRIGHT()) {
 			direction.add(SPEED * delta, 0);
+			left = false;
 		}
 		if (controls.isLEFT()) {
 			direction.add(-SPEED * delta, 0);
+			left = true;
 		}
 		if (controls.isUP()) {
 			direction.add(0, -SPEED * delta);
@@ -46,13 +52,25 @@ public class PlayerEntity extends Entity {
 	protected void move(final int delta) {
 		super.move(delta);
 
+		if (direction.x != 0) {
+			walkCyle += delta;
+			walkCyle %= 300;
+		}
 		collisionBox.setLocation(pos.x() - 1, pos.y());
 	}
 
 	@Override
 	public void render(final Graphics g) {
-		g.setColor(Color.GRAY);
-		g.fillCircleCentered(pos.x, pos.y - 3, SIZE);
+		// g.setColor(Color.GRAY);
+		// g.fillCircleCentered(pos.x, pos.y - 8, SIZE);
+
+		BufferedImage img = left ? ImageLoader.hero_simple_left_1 : ImageLoader.hero_simple_right_1;
+		if (walkCyle > 100)
+			img = left ? ImageLoader.hero_simple_left_2 : ImageLoader.hero_simple_right_2;
+		if (walkCyle > 200)
+			img = left ? ImageLoader.hero_simple_left_3 : ImageLoader.hero_simple_right_3;
+
+		g.drawImage(img, pos.x - 16, pos.y - 28);
 	}
 
 	public void setDirection(final Vector2d direction) {

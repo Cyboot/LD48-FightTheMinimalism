@@ -9,7 +9,7 @@ import de.timweb.ld48.minimalism.util.Vector2d;
 
 public class GrowEntity extends Entity {
 	private static final double	GROWSPEED	= 0.2;
-	private static final int	SIZE		= 10;
+	private static final int	SIZE		= 20;
 	private static final double	MIN_DIST	= SIZE;
 	private static final double	MAX_HEIGHT	= SIZE * 10;
 	private Game				game		= Game.getInstance();

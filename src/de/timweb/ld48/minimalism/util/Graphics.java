@@ -10,7 +10,7 @@ public class Graphics {
 
 	private java.awt.Graphics	g;
 
-	public void drawGraphics(final Image img, final double x, final double y) {
+	public void drawImage(final Image img, final double x, final double y) {
 		g.drawImage(img, (int) x, (int) y, null);
 	}
 

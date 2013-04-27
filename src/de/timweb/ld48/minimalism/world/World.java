@@ -11,21 +11,23 @@ import de.timweb.ld48.minimalism.entity.PushEntity;
 import de.timweb.ld48.minimalism.interfaces.Renderable;
 import de.timweb.ld48.minimalism.interfaces.Updateable;
 import de.timweb.ld48.minimalism.util.Graphics;
+import de.timweb.ld48.minimalism.util.ImageLoader;
 import de.timweb.ld48.minimalism.util.RandomUtil;
 import de.timweb.ld48.minimalism.util.Vector2d;
 
 public class World implements Updateable, Renderable {
-	public static final int		WORLD_01	= 1;
-	private static final int	TILE_SIZE	= 10;
+	public static final int		WORLD_01		= 1;
+	private static final int	TILE_SIZE		= 20;
 
 	private static World		instance;
 
 	private Tile[][]			tiles;
-	private int					offsetX		= 0;
-	private int					offsetY		= 0;
-	private double				gravity		= 0.01;
+	private int					offsetX			= 0;
+	private int					offsetY			= 0;
+	private double				gravity			= 0.01;
 
-	private List<Entity>		entities	= new ArrayList<Entity>();
+	private boolean				showTextures	= true;
+	private List<Entity>		entities		= new ArrayList<Entity>();
 
 	public World(final int level) {
 		switch (level) {
@@ -33,10 +35,10 @@ public class World implements Updateable, Renderable {
 			offsetX = 0;
 			offsetY = 0;
 
-			entities.add(new PushEntity(new Vector2d(260, 585)));
-			entities.add(new GrowEntity(new Vector2d(391, 581)));
+			entities.add(new PushEntity(new Vector2d(260, 575)));
+			entities.add(new GrowEntity(new Vector2d(391, 571)));
 
-			tiles = new Tile[60][99];
+			tiles = new Tile[30][50];
 			initTiles(level);
 			break;
 		default:
@@ -67,8 +69,12 @@ public class World implements Updateable, Renderable {
 		g.g().drawRect(offsetX, offsetY, tiles[0].length * TILE_SIZE, tiles.length * TILE_SIZE);
 		for (int y = 0; y < tiles.length; y++) {
 			for (int x = 0; x < tiles[0].length; x++) {
-				if (tiles[y][x].isSolid())
-					g.g().fillRect(x * TILE_SIZE + offsetX, y * TILE_SIZE + offsetY, TILE_SIZE, TILE_SIZE);
+				if (tiles[y][x].isSolid()) {
+					if (showTextures)
+						g.drawImage(ImageLoader.tile_glass_grey, x * TILE_SIZE + offsetX, y * TILE_SIZE + offsetY);
+					else
+						g.g().fillRect(x * TILE_SIZE + offsetX, y * TILE_SIZE + offsetY, TILE_SIZE, TILE_SIZE);
+				}
 			}
 		}
 

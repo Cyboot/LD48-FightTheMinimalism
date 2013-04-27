@@ -7,6 +7,7 @@ import java.awt.image.BufferStrategy;
 
 import de.timweb.ld48.minimalism.game.Game;
 import de.timweb.ld48.minimalism.util.Graphics;
+import de.timweb.ld48.minimalism.util.ImageLoader;
 
 public class Canvas extends java.awt.Canvas implements Runnable {
 	public static final int		WIDTH			= 1000;
@@ -31,6 +32,7 @@ public class Canvas extends java.awt.Canvas implements Runnable {
 	public void start() {
 		Thread t = new Thread(this);
 
+		ImageLoader.init();
 		Game.getInstance().restart();
 		t.start();
 	}

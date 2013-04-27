@@ -7,7 +7,7 @@ import de.timweb.ld48.minimalism.util.Graphics;
 import de.timweb.ld48.minimalism.util.Vector2d;
 
 public class PushEntity extends Entity {
-	private static final double	SIZE		= 10;
+	private static final double	SIZE		= 20;
 	private static final double	MIN_DIST	= SIZE;
 	private Game				game		= Game.getInstance();
 
