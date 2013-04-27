@@ -17,7 +17,7 @@ public class World implements Updateable, Renderable {
 	private Tile[][]			tiles;
 	private int					offsetX		= 0;
 	private int					offsetY		= 0;
-	private double				gravity		= 0.8;
+	private double				gravity		= 0.01;
 
 	public World(final int level) {
 		switch (level) {

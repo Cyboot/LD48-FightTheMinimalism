@@ -10,6 +10,7 @@ public class Controls implements KeyListener {
 	private boolean			isDOWN		= false;
 	private boolean			isLEFT		= false;
 	private boolean			isRIGHT		= false;
+	private boolean			wasSpace	= false;
 
 	public static Controls getInstance() {
 		return instance;
@@ -29,6 +30,9 @@ public class Controls implements KeyListener {
 			break;
 		case KeyEvent.VK_RIGHT:
 			isRIGHT = true;
+			break;
+		case KeyEvent.VK_SPACE:
+			wasSpace = true;
 			break;
 		}
 	}
@@ -53,7 +57,13 @@ public class Controls implements KeyListener {
 
 	@Override
 	public void keyTyped(final KeyEvent ke) {
+	}
 
+	public boolean wasSpace() {
+		boolean result = wasSpace;
+		wasSpace = false;
+
+		return result;
 	}
 
 	public boolean isDOWN() {

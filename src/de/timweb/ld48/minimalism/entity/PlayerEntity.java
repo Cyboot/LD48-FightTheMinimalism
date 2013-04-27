@@ -7,10 +7,9 @@ import de.timweb.ld48.minimalism.util.Graphics;
 import de.timweb.ld48.minimalism.util.Vector2d;
 
 public class PlayerEntity extends Entity {
-	private final int		SIZE		= 8;
-	private final double	SPEED		= 0.1;
+	private final int	SIZE		= 8;
 
-	private Controls		controls	= Controls.getInstance();
+	private Controls	controls	= Controls.getInstance();
 
 	public PlayerEntity(final Vector2d pos) {
 		super(pos);
@@ -19,17 +18,23 @@ public class PlayerEntity extends Entity {
 	@Override
 	public void update(final int delta) {
 		if (controls.isRIGHT()) {
-			move(SPEED * delta, 0);
+			direction.add(SPEED * delta, 0);
 		}
 		if (controls.isLEFT()) {
-			move(-SPEED * delta, 0);
+			direction.add(-SPEED * delta, 0);
 		}
 		if (controls.isUP()) {
-			move(0, -SPEED * delta);
+			direction.add(0, -SPEED * delta);
 		}
 		if (controls.isDOWN()) {
-			move(0, SPEED * delta);
+			direction.add(0, SPEED * delta);
 		}
+
+		if (controls.wasSpace()) {
+			direction.add(0, -SPEED * 100 * delta);
+		}
+
+		move(delta);
 	}
 
 	@Override
