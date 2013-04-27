@@ -30,13 +30,13 @@ public class World implements Updateable, Renderable {
 	public World(final int level) {
 		switch (level) {
 		case WORLD_01:
-			offsetX = 50;
-			offsetY = 50;
+			offsetX = 0;
+			offsetY = 0;
 
-			entities.add(new PushEntity(new Vector2d(260, 337)));
-			entities.add(new GrowEntity(new Vector2d(360, 337)));
+			entities.add(new PushEntity(new Vector2d(260, 585)));
+			entities.add(new GrowEntity(new Vector2d(391, 581)));
 
-			tiles = new Tile[30][40];
+			tiles = new Tile[60][99];
 			initTiles(level);
 			break;
 		default:

@@ -52,7 +52,7 @@ public class PlayerEntity extends Entity {
 	@Override
 	public void render(final Graphics g) {
 		g.setColor(Color.GRAY);
-		g.fillCircleCentered(pos.x, pos.y, SIZE);
+		g.fillCircleCentered(pos.x, pos.y - 3, SIZE);
 	}
 
 	public void setDirection(final Vector2d direction) {

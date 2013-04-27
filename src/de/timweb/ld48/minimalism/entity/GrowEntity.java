@@ -29,10 +29,7 @@ public class GrowEntity extends Entity {
 	@Override
 	public void render(final Graphics g) {
 		g.setColor(Color.red);
-		g.fillRect(pos.x, pos.y - extraheight, SIZE, SIZE + extraheight);
-
-		g.setColor(Color.yellow);
-		g.drawRect(collisionBox.getX(), collisionBox.getY(), collisionBox.getWidth(), collisionBox.getHeight());
+		g.fillRect(collisionBox.getX(), collisionBox.getY(), collisionBox.getWidth(), collisionBox.getHeight());
 	}
 
 
