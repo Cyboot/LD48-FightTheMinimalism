@@ -12,10 +12,20 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import de.timweb.ld48.minimalism.Main;
+import de.timweb.ld48.minimalism.game.Game;
+import de.timweb.ld48.minimalism.game.Level;
 
 public enum SoundEffect {
-	MUSIC("test.wav"), //
-	TEST("test.wav");
+	MUSIC_1("music_1.wav"), //
+	MUSIC_2("music_2.wav"), //
+	MUSIC_3("music_3.wav"), //
+	EXPLOSION("explosion.wav"), //
+	HURT("hurt.wav"), //
+	JUMP("jump.wav"), //
+	KILL("kill.wav"), //
+	LEVEL("level.wav"), //
+	PICKUP("pickup.wav"), //
+	SHOOT("shoot.wav");
 
 	private static boolean	isMuted			= false;
 	private static boolean	isMusicMuted	= false;
@@ -87,16 +97,36 @@ public enum SoundEffect {
 	}
 
 	public static void stopMusic() {
-		SoundEffect.MUSIC.stop();
+		switch (Game.getInstance().getCurrentLevel().getLevelType()) {
+		case Level.LEVEL_SIMPLE:
+			SoundEffect.MUSIC_1.stop();
+			break;
+		case Level.LEVEL_MID:
+			SoundEffect.MUSIC_2.stop();
+			break;
+		case Level.LEVEL_COMPLEX:
+			SoundEffect.MUSIC_3.stop();
+			break;
+		}
 		isMusicMuted = true;
 	}
 
 	public static void muteMusic() {
 		if (!isMusicMuted) {
-			SoundEffect.MUSIC.stop();
+			stopMusic();
 			isMusicMuted = true;
 		} else {
-			SoundEffect.MUSIC.loop();
+			switch (Game.getInstance().getCurrentLevel().getLevelType()) {
+			case Level.LEVEL_SIMPLE:
+				SoundEffect.MUSIC_1.stop();
+				break;
+			case Level.LEVEL_MID:
+				SoundEffect.MUSIC_2.stop();
+				break;
+			case Level.LEVEL_COMPLEX:
+				SoundEffect.MUSIC_3.stop();
+				break;
+			}
 			isMusicMuted = false;
 		}
 	}

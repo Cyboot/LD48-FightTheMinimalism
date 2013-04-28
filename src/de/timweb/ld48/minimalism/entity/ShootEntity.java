@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.List;
 
 import de.timweb.ld48.minimalism.util.Graphics;
+import de.timweb.ld48.minimalism.util.SoundEffect;
 import de.timweb.ld48.minimalism.util.Vector2d;
 import de.timweb.ld48.minimalism.world.World;
 
@@ -13,6 +14,7 @@ public class ShootEntity extends Entity {
 
 		direction = new Vector2d(left ? -0.7 : 0.7, 0);
 		setSolid(false);
+		SoundEffect.SHOOT.play();
 	}
 
 	@Override

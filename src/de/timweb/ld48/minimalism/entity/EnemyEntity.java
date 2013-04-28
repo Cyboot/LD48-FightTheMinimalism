@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 
 import de.timweb.ld48.minimalism.util.Graphics;
 import de.timweb.ld48.minimalism.util.ImageLoader;
+import de.timweb.ld48.minimalism.util.SoundEffect;
 import de.timweb.ld48.minimalism.util.Vector2d;
 
 public class EnemyEntity extends NonSolidEntity {
@@ -28,6 +29,11 @@ public class EnemyEntity extends NonSolidEntity {
 	@Override
 	public void collideWithPlayer(final PlayerEntity player) {
 		player.kill();
+	}
+
+	@Override
+	protected void onKilled() {
+		SoundEffect.HURT.play();
 	}
 
 	@Override

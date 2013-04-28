@@ -14,7 +14,7 @@ public class ActionEntity extends NonSolidEntity {
 
 	@Override
 	public void render(final Graphics g) {
-		g.setColor(Color.blue);
+		g.setColor(Color.cyan);
 		g.fillRect(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height);
 	}
 

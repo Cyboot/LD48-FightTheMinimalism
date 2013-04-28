@@ -19,7 +19,7 @@ public class ActionWallEntity extends Entity implements CollidableEntity, Action
 
 	@Override
 	public void render(final Graphics g) {
-		g.setColor(Color.blue);
+		g.setColor(Color.cyan);
 		g.drawRect(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height);
 	}
 

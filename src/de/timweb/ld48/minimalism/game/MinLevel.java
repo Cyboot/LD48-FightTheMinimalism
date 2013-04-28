@@ -7,6 +7,7 @@ import de.timweb.ld48.minimalism.engine.Canvas;
 import de.timweb.ld48.minimalism.engine.Controls;
 import de.timweb.ld48.minimalism.entity.PlayerEntity;
 import de.timweb.ld48.minimalism.util.Graphics;
+import de.timweb.ld48.minimalism.util.SoundEffect;
 import de.timweb.ld48.minimalism.util.Vector2d;
 import de.timweb.ld48.minimalism.world.World;
 
@@ -20,8 +21,11 @@ public class MinLevel extends Level {
 	private int					titelTimeleft;
 	private int					levelBlendTimeleft	= 0;
 	private boolean				levelFinished		= false;
+	private int					levelType			= LEVEL_SIMPLE;
 
 	public MinLevel() {
+		SoundEffect.MUSIC_3.loop();
+		SoundEffect.muteSound();
 		newLevel(true);
 	}
 
@@ -72,9 +76,6 @@ public class MinLevel extends Level {
 		world.render(g);
 		player.render(g);
 
-		if (levelBlendTimeleft >= -50)
-			blend.renderLevelBlend(g);
-
 
 		g.setColor(Color.gray);
 		if (titelTimeleft > 0) {
@@ -83,6 +84,8 @@ public class MinLevel extends Level {
 			String desc = world.getDescription();
 			g.drawText(desc, Canvas.WIDTH / 2 - 150, Canvas.HEIGHT / 2 + 10, Graphics.font_20);
 		}
+		if (levelBlendTimeleft >= -50)
+			blend.renderLevelBlend(g);
 	}
 
 	private LevelBlend	blend	= new LevelBlend();
@@ -173,6 +176,11 @@ public class MinLevel extends Level {
 			rect.setBounds(0, 0, 0, 0);
 			rect2.setBounds(0, 0, 0, 0);
 		}
+	}
+
+	@Override
+	public int getLevelType() {
+		return levelType;
 	}
 
 }

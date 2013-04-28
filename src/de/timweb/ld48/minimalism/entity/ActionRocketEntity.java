@@ -7,6 +7,7 @@ import de.timweb.ld48.minimalism.interfaces.ActionListenerEntity;
 import de.timweb.ld48.minimalism.util.Graphics;
 import de.timweb.ld48.minimalism.util.ImageLoader;
 import de.timweb.ld48.minimalism.util.RandomUtil;
+import de.timweb.ld48.minimalism.util.SoundEffect;
 import de.timweb.ld48.minimalism.util.Vector2d;
 import de.timweb.ld48.minimalism.world.World;
 
@@ -65,6 +66,11 @@ public class ActionRocketEntity extends EnemyEntity implements ActionListenerEnt
 
 	public ActionRocketEntity(final Vector2d pos) {
 		this(pos, null);
+	}
+
+	@Override
+	protected void onKilled() {
+		SoundEffect.EXPLOSION.play();
 	}
 
 	@Override

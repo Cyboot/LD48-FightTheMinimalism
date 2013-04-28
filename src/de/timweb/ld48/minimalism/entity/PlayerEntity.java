@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import de.timweb.ld48.minimalism.engine.Controls;
 import de.timweb.ld48.minimalism.util.Graphics;
 import de.timweb.ld48.minimalism.util.ImageLoader;
+import de.timweb.ld48.minimalism.util.SoundEffect;
 import de.timweb.ld48.minimalism.util.Vector2d;
 import de.timweb.ld48.minimalism.world.World;
 
@@ -51,6 +52,7 @@ public class PlayerEntity extends Entity {
 
 		// TODO-03: Jump enable/disable
 		if (controls.wasSpace() && isJumpEnable && gravity.length() < 0.5) {
+			SoundEffect.JUMP.play();
 			direction.add(0, -SPEED * 50 * delta);
 		}
 
@@ -70,6 +72,12 @@ public class PlayerEntity extends Entity {
 		collisionBox.setLocation(pos.x() - 1, pos.y());
 		return result;
 	}
+
+	@Override
+	protected void onKilled() {
+		SoundEffect.KILL.play();
+	}
+
 
 	@Override
 	public void render(final Graphics g) {

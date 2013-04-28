@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 
 import de.timweb.ld48.minimalism.util.Graphics;
 import de.timweb.ld48.minimalism.util.ImageLoader;
+import de.timweb.ld48.minimalism.util.SoundEffect;
 import de.timweb.ld48.minimalism.util.Vector2d;
 
 public class PushEntity extends NonSolidEntity {
@@ -35,6 +36,8 @@ public class PushEntity extends NonSolidEntity {
 	public void collideWithPlayer(final PlayerEntity player) {
 		direction = new Vector2d(0, -0.5);
 		player.setDirection(direction);
+
+		SoundEffect.JUMP.play();
 	}
 
 }

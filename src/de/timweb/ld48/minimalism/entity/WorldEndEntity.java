@@ -3,6 +3,7 @@ package de.timweb.ld48.minimalism.entity;
 import java.awt.Color;
 
 import de.timweb.ld48.minimalism.util.Graphics;
+import de.timweb.ld48.minimalism.util.SoundEffect;
 import de.timweb.ld48.minimalism.util.Vector2d;
 import de.timweb.ld48.minimalism.world.World;
 
@@ -15,6 +16,7 @@ public class WorldEndEntity extends NonSolidEntity {
 	@Override
 	public void collideWithPlayer(final PlayerEntity player) {
 		World.getInstance().finish();
+		SoundEffect.LEVEL.play();
 	}
 
 	@Override
