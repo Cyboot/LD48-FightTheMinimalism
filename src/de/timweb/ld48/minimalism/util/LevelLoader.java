@@ -8,6 +8,7 @@ import de.timweb.ld48.minimalism.Main;
 import de.timweb.ld48.minimalism.entity.ActionEntity;
 import de.timweb.ld48.minimalism.entity.ActionWallEntity;
 import de.timweb.ld48.minimalism.entity.BoxEntity;
+import de.timweb.ld48.minimalism.entity.EnemyEntity;
 import de.timweb.ld48.minimalism.entity.GrowEntity;
 import de.timweb.ld48.minimalism.entity.PushEntity;
 import de.timweb.ld48.minimalism.entity.WorldEndEntity;
@@ -23,6 +24,8 @@ public class LevelLoader {
 		Tile[][] tiles = new Tile[World.TILE_Y][World.TILE_X];
 
 		try {
+			world.setDescription(breader.readLine());
+
 			for (int i = 0; i < World.TILE_Y; i++) {
 				String line = breader.readLine();
 				process(i, line, tiles, world);
@@ -71,6 +74,10 @@ public class LevelLoader {
 			case 'a':
 				tile = Tile.AIR;
 				world.addEntity(new ActionWallEntity(new Vector2d(x * World.TILE_SIZE, y * World.TILE_SIZE)));
+				break;
+			case 'e':
+				tile = Tile.AIR;
+				world.addEntity(new EnemyEntity(new Vector2d(x * World.TILE_SIZE, y * World.TILE_SIZE)));
 				break;
 			default:
 				tile = Tile.AIR;

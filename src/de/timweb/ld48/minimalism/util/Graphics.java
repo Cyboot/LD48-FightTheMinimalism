@@ -39,7 +39,7 @@ public class Graphics {
 		}
 
 		g.setFont(font);
-		g.drawString(str, x, y);
+		g.drawString(str == null ? "" : str, x, y);
 	}
 
 	public static Graphics instance(final java.awt.Graphics g) {

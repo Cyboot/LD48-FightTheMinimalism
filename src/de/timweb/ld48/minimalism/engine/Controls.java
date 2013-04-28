@@ -13,6 +13,7 @@ public class Controls implements KeyListener {
 	private boolean			wasSpace	= false;
 
 	private boolean			wasF12;
+	private boolean			wasR;
 
 	public static Controls getInstance() {
 		return instance;
@@ -38,6 +39,9 @@ public class Controls implements KeyListener {
 			break;
 		case KeyEvent.VK_F12:
 			wasF12 = true;
+			break;
+		case KeyEvent.VK_R:
+			wasR = true;
 			break;
 		}
 	}
@@ -85,6 +89,13 @@ public class Controls implements KeyListener {
 
 	public boolean isUP() {
 		return isUP;
+	}
+
+	public boolean wasR() {
+		boolean result = wasR;
+		wasR = false;
+
+		return result;
 	}
 
 	public boolean wasF12() {

@@ -40,7 +40,7 @@ public class PlayerEntity extends Entity {
 		}
 
 		// TODO-03: Jump enable/disable
-		if (controls.wasSpace() && isJumpEnable) {
+		if (controls.wasSpace() && isJumpEnable && gravity.length() < 0.5) {
 			direction.add(0, -SPEED * 50 * delta);
 		}
 

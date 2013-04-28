@@ -7,7 +7,7 @@ import de.timweb.ld48.minimalism.util.Graphics;
 import de.timweb.ld48.minimalism.util.Vector2d;
 
 public abstract class NonSolidEntity extends Entity {
-	private static final int	SIZE	= 20;
+	protected static final int	SIZE	= 20;
 	private Game				game	= Game.getInstance();
 
 	protected Rectangle			collisionBox;

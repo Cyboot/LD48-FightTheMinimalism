@@ -30,6 +30,7 @@ public class World implements Updateable, Renderable {
 	private boolean			isFinished		= false;
 	private boolean			showTextures	= true;
 	private List<Entity>	entities		= new ArrayList<Entity>();
+	private String			description		= null;
 
 	public World(final int level) {
 		LevelLoader.loadLevel(level, this);
@@ -142,5 +143,13 @@ public class World implements Updateable, Renderable {
 			if (e instanceof ActionListenerEntity)
 				((ActionListenerEntity) e).actionPerformed();
 		}
+	}
+
+	public void setDescription(final String description) {
+		this.description = description;
+	}
+
+	public String getDescription() {
+		return description;
 	}
 }
