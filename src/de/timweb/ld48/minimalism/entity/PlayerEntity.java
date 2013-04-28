@@ -1,9 +1,12 @@
 package de.timweb.ld48.minimalism.entity;
 
+import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import de.timweb.ld48.minimalism.engine.Controls;
+import de.timweb.ld48.minimalism.game.Game;
+import de.timweb.ld48.minimalism.game.Level;
 import de.timweb.ld48.minimalism.util.Graphics;
 import de.timweb.ld48.minimalism.util.ImageLoader;
 import de.timweb.ld48.minimalism.util.SoundEffect;
@@ -80,16 +83,31 @@ public class PlayerEntity extends Entity {
 
 	@Override
 	public void render(final Graphics g) {
-		// g.setColor(Color.GRAY);
-		// g.fillCircleCentered(pos.x, pos.y - 8, SIZE);
+		if (Game.getInstance().getCurrentLevel().getLevelType() == Level.LEVEL_SIMPLE) {
+			g.setColor(Color.GRAY);
+			g.fillCircleCentered(pos.x, pos.y - 8, 16);
+		}
+		if (Game.getInstance().getCurrentLevel().getLevelType() == Level.LEVEL_MID) {
 
-		BufferedImage img = left ? ImageLoader.hero_simple_left_1 : ImageLoader.hero_simple_right_1;
-		if (walkCyle > 100)
-			img = left ? ImageLoader.hero_simple_left_2 : ImageLoader.hero_simple_right_2;
-		if (walkCyle > 200)
-			img = left ? ImageLoader.hero_simple_left_3 : ImageLoader.hero_simple_right_3;
+			BufferedImage img = left ? ImageLoader.hero_simple_left_1 : ImageLoader.hero_simple_right_1;
+			if (walkCyle > 100)
+				img = left ? ImageLoader.hero_simple_left_2 : ImageLoader.hero_simple_right_2;
+			if (walkCyle > 200)
+				img = left ? ImageLoader.hero_simple_left_3 : ImageLoader.hero_simple_right_3;
 
-		g.drawImage(img, pos.x - 16, pos.y - 28);
+			g.drawImage(img, pos.x - 16, pos.y - 28);
+		}
+		if (Game.getInstance().getCurrentLevel().getLevelType() == Level.LEVEL_COMPLEX) {
+
+			BufferedImage img = left ? ImageLoader.hero_complex_left_1 : ImageLoader.hero_complex_right_1;
+			if (walkCyle > 100)
+				img = left ? ImageLoader.hero_complex_left_2 : ImageLoader.hero_complex_right_2;
+			if (walkCyle > 200)
+				img = left ? ImageLoader.hero_complex_left_3 : ImageLoader.hero_complex_right_3;
+
+			g.drawImage(img, pos.x - 16, pos.y - 28);
+		}
+
 	}
 
 	public void setDirection(final Vector2d direction) {

@@ -3,6 +3,7 @@ package de.timweb.ld48.minimalism.entity;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
+import de.timweb.ld48.minimalism.game.Game;
 import de.timweb.ld48.minimalism.interfaces.ActionListenerEntity;
 import de.timweb.ld48.minimalism.util.Graphics;
 import de.timweb.ld48.minimalism.util.ImageLoader;
@@ -71,6 +72,8 @@ public class ActionRocketEntity extends EnemyEntity implements ActionListenerEnt
 	@Override
 	protected void onKilled() {
 		SoundEffect.EXPLOSION.play();
+
+		Game.getInstance().getCurrentLevel().increaseComplexity();
 	}
 
 	@Override

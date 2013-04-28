@@ -78,7 +78,7 @@ public class Canvas extends java.awt.Canvas implements Runnable {
 
 		game.render(g);
 
-		g.setColor(Color.gray);
+		g.setColor(Color.red);
 		g.drawText("FPS: " + fps, WIDTH - 80, 20, Graphics.font_20);
 
 		g.dispose();

@@ -23,8 +23,10 @@ public class ShootEntity extends Entity {
 
 		for (Entity e : list) {
 			if (e instanceof EnemyEntity) {
-				if (((EnemyEntity) e).getCollisionBox().contains(pos.x, pos.y))
+				if (((EnemyEntity) e).getCollisionBox().contains(pos.x, pos.y)) {
 					e.kill();
+					kill();
+				}
 			}
 		}
 

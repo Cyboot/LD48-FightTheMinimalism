@@ -40,7 +40,7 @@ public class MinLevel extends Level {
 
 		if (level == 7)
 			levelType = LEVEL_MID;
-		if (level == 13)
+		if (level == 12)
 			levelType = LEVEL_COMPLEX;
 
 		world = new World(level);
@@ -72,7 +72,7 @@ public class MinLevel extends Level {
 		}
 
 		levelBlendTimeleft -= delta;
-		if (levelFinished && levelBlendTimeleft < MAX_LEVEL_BLEND / 2) {
+		if (levelFinished && levelBlendTimeleft < 0) {
 			newLevel(true);
 		}
 	}
@@ -81,17 +81,20 @@ public class MinLevel extends Level {
 	public void render(final Graphics g) {
 		if (levelType == LEVEL_MID) {
 			g.drawImage(ImageLoader.background_norm, 0, 0);
+			g.drawImage(ImageLoader.shade_white, 0, 0);
 		}
 		if (levelType == LEVEL_COMPLEX) {
 			g.drawImage(ImageLoader.background_complex, 0, 0);
-			g.drawImage(ImageLoader.shade_white, 0, 0);
+
+			if (levelBlendTimeleft < 0)
+				g.drawImage(ImageLoader.shade_white, 0, 0);
 		}
 
 		world.render(g);
 		player.render(g);
 
 
-		g.setColor(Color.gray);
+		g.setColor(Color.black);
 		if (titelTimeleft > 0) {
 			g.drawText("Level " + level, Canvas.WIDTH / 2 - 100, Canvas.HEIGHT / 2 - 150, Graphics.font_50);
 
@@ -190,6 +193,14 @@ public class MinLevel extends Level {
 			rect.setBounds(0, 0, 0, 0);
 			rect2.setBounds(0, 0, 0, 0);
 		}
+	}
+
+	@Override
+	public void increaseComplexity() {
+		if (level == 6)
+			levelType = LEVEL_MID;
+		if (level == 11)
+			levelType = LEVEL_COMPLEX;
 	}
 
 	@Override

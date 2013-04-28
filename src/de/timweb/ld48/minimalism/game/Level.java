@@ -25,4 +25,6 @@ public abstract class Level implements Updateable, Renderable {
 	}
 
 	public abstract int getLevelType();
+
+	public abstract void increaseComplexity();
 }

@@ -1,11 +1,11 @@
 package de.timweb.ld48.minimalism.entity;
 
-import java.awt.Color;
 import java.awt.Rectangle;
 
 import de.timweb.ld48.minimalism.interfaces.ActionListenerEntity;
 import de.timweb.ld48.minimalism.interfaces.CollidableEntity;
 import de.timweb.ld48.minimalism.util.Graphics;
+import de.timweb.ld48.minimalism.util.ImageLoader;
 import de.timweb.ld48.minimalism.util.Vector2d;
 
 public class ActionWallEntity extends Entity implements CollidableEntity, ActionListenerEntity {
@@ -26,8 +26,11 @@ public class ActionWallEntity extends Entity implements CollidableEntity, Action
 		if (!isSolid)
 			return;
 
-		g.setColor(Color.cyan);
-		g.drawRect(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height);
+		g.drawImage(ImageLoader.tile_glass_grey, pos.x, pos.y);
+
+		// g.setColor(Color.cyan);
+		// g.drawRect(collisionBox.x, collisionBox.y, collisionBox.width,
+		// collisionBox.height);
 	}
 
 	@Override
