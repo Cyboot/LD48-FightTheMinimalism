@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 public class Controls implements KeyListener {
 	private static Controls	instance	= new Controls();
 
+	private boolean			isCTRL		= false;
 	private boolean			isUP		= false;
 	private boolean			isDOWN		= false;
 	private boolean			isLEFT		= false;
@@ -34,6 +35,9 @@ public class Controls implements KeyListener {
 		case KeyEvent.VK_RIGHT:
 			isRIGHT = true;
 			break;
+		case KeyEvent.VK_CONTROL:
+			isCTRL = true;
+			break;
 		case KeyEvent.VK_SPACE:
 			wasSpace = true;
 			break;
@@ -60,6 +64,9 @@ public class Controls implements KeyListener {
 			break;
 		case KeyEvent.VK_RIGHT:
 			isRIGHT = false;
+			break;
+		case KeyEvent.VK_CONTROL:
+			isCTRL = false;
 			break;
 		}
 	}
@@ -89,6 +96,10 @@ public class Controls implements KeyListener {
 
 	public boolean isUP() {
 		return isUP;
+	}
+
+	public boolean isCTRL() {
+		return isCTRL;
 	}
 
 	public boolean wasR() {

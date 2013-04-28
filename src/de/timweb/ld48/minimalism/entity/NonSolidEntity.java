@@ -27,6 +27,10 @@ public abstract class NonSolidEntity extends Entity {
 		}
 	}
 
+	public Rectangle getCollisionBox() {
+		return collisionBox;
+	}
+
 	public abstract void collideWithPlayer(PlayerEntity player);
 
 	@Override

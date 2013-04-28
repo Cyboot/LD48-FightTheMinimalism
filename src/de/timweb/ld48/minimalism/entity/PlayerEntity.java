@@ -7,15 +7,21 @@ import de.timweb.ld48.minimalism.engine.Controls;
 import de.timweb.ld48.minimalism.util.Graphics;
 import de.timweb.ld48.minimalism.util.ImageLoader;
 import de.timweb.ld48.minimalism.util.Vector2d;
+import de.timweb.ld48.minimalism.world.World;
 
 public class PlayerEntity extends Entity {
-	private Controls	controls		= Controls.getInstance();
+	private static final int	SHOOT_COOLDOWN	= 250;
 
-	private Rectangle	collisionBox	= new Rectangle(0, 0, 3, 3);
-	private boolean		isJumpEnable	= true;
+	private Controls			controls		= Controls.getInstance();
 
-	private int			walkCyle		= 0;
-	private boolean		left			= true;
+	private Rectangle			collisionBox	= new Rectangle(0, 0, 3, 3);
+	private boolean				isJumpEnable	= true;
+	private boolean				isShotEnable	= true;
+
+	private int					walkCyle		= 0;
+	private boolean				left			= false;
+	private int					lastShot		= 0;
+
 
 	public PlayerEntity(final Vector2d pos) {
 		super(pos);
@@ -38,24 +44,31 @@ public class PlayerEntity extends Entity {
 		if (controls.isDOWN()) {
 			direction.add(0, SPEED * delta);
 		}
+		if (controls.isCTRL() && isShotEnable && lastShot > SHOOT_COOLDOWN) {
+			World.getInstance().addEntity(new ShootEntity(pos.copy().add(0, -5), left));
+			lastShot = 0;
+		}
 
 		// TODO-03: Jump enable/disable
 		if (controls.wasSpace() && isJumpEnable && gravity.length() < 0.5) {
 			direction.add(0, -SPEED * 50 * delta);
 		}
 
+		lastShot += delta;
+
 		move(delta);
 	}
 
 	@Override
-	protected void move(final int delta) {
-		super.move(delta);
+	protected boolean move(final int delta) {
+		boolean result = super.move(delta);
 
 		if (direction.x != 0) {
 			walkCyle += delta;
 			walkCyle %= 300;
 		}
 		collisionBox.setLocation(pos.x() - 1, pos.y());
+		return result;
 	}
 
 	@Override
@@ -78,6 +91,10 @@ public class PlayerEntity extends Entity {
 
 	public void setJumpEnable(final boolean isJumpEnable) {
 		this.isJumpEnable = isJumpEnable;
+	}
+
+	public void setShotEnable(final boolean isShotEnable) {
+		this.isShotEnable = isShotEnable;
 	}
 
 	/**

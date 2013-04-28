@@ -6,15 +6,16 @@ import de.timweb.ld48.minimalism.util.Vector2d;
 import de.timweb.ld48.minimalism.world.World;
 
 public abstract class Entity implements Updateable, Renderable {
-	protected final double	SPEED		= 0.0005;
-	protected final double	MAXSPEED	= SPEED * 500;
+	protected final double	SPEED				= 0.0005;
+	protected final double	MAXSPEED			= SPEED * 500;
 
 	protected Vector2d		pos;
-	protected Vector2d		direction	= new Vector2d();
-	protected Vector2d		gravity		= new Vector2d();
+	protected Vector2d		direction			= new Vector2d();
+	protected Vector2d		gravity				= new Vector2d();
 
-	private boolean			isAlive		= true;
-	private boolean			isSolid		= true;
+	private boolean			isAlive				= true;
+	protected boolean		isGravityEffected	= true;
+	private boolean			isSolid				= true;
 
 	public Entity() {
 		this(new Vector2d());
@@ -30,7 +31,7 @@ public abstract class Entity implements Updateable, Renderable {
 		gravity.add(0, world.getGravity() * delta);
 	}
 
-	protected void move(final int delta) {
+	protected boolean move(final int delta) {
 		World world = World.getInstance();
 		Vector2d target = pos.copy();
 
@@ -49,23 +50,25 @@ public abstract class Entity implements Updateable, Renderable {
 				pos.set(target);
 			}
 
-			if (isGravityValid && isSolid) {
+			if (isGravityValid && isGravityEffected) {
 				target.set(pos);
 				target.add(0, gravity.y / STEPS);
 				isGravityValid = world.isValidPos(target, this);
 			}
-			if (isGravityValid && isSolid) {
+			if (isGravityValid && isGravityEffected) {
 				pos.set(target);
 			}
 		}
 
-		if (!isDirectionValid && isSolid)
+		if (!isDirectionValid && isGravityEffected)
 			direction.set(0, 0);
 		if (!isGravityValid) {
 			gravity.set(0, 0);
 			direction.y = 0;
 		}
 
+		if (!isGravityEffected)
+			return isDirectionValid;
 
 		// Slow down direction
 		if (direction.x > 0)
@@ -93,7 +96,7 @@ public abstract class Entity implements Updateable, Renderable {
 
 		// System.out.println("dir: " + direction + " ---- gravity: " +
 		// gravity);
-
+		return isDirectionValid && isGravityValid;
 	}
 
 	protected void onKilled() {
@@ -109,7 +112,7 @@ public abstract class Entity implements Updateable, Renderable {
 	}
 
 	public void setSolid(final boolean isSolid) {
-		this.isSolid = isSolid;
+		this.isGravityEffected = isSolid;
 	}
 
 	public Vector2d getPos() {

@@ -11,7 +11,7 @@ import de.timweb.ld48.minimalism.util.Vector2d;
 import de.timweb.ld48.minimalism.world.World;
 
 public class MinLevel extends Level {
-	private static final int	MAX_TITEL			= 5000;
+	private static final int	MAX_TITEL			= 3000;
 	private static final int	MAX_LEVEL_BLEND		= 800;
 	private World				world;
 
@@ -45,7 +45,7 @@ public class MinLevel extends Level {
 		if (Controls.getInstance().wasF12()) {
 			world.finish();
 		}
-		if (Controls.getInstance().wasR()) {
+		if (Controls.getInstance().wasR() || !player.isAlive()) {
 			newLevel(false);
 		}
 
@@ -161,7 +161,7 @@ public class MinLevel extends Level {
 				break;
 			}
 
-			System.out.println(rect2.width);
+			// System.out.println(rect2.width);
 			g.setColor(Color.gray);
 			g.fillRect(rect.x, rect.y, rect.width, rect.height);
 			g.setColor(Color.gray);

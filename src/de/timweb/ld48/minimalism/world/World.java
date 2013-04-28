@@ -134,6 +134,10 @@ public class World implements Updateable, Renderable {
 		entities.add(e);
 	}
 
+	public List<Entity> getEntities() {
+		return entities;
+	}
+
 	public void setTiles(final Tile[][] tiles) {
 		this.tiles = tiles;
 	}
