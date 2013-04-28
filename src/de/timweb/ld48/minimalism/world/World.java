@@ -7,73 +7,52 @@ import java.util.List;
 
 import de.timweb.ld48.minimalism.entity.Entity;
 import de.timweb.ld48.minimalism.entity.GrowEntity;
-import de.timweb.ld48.minimalism.entity.PushEntity;
 import de.timweb.ld48.minimalism.interfaces.Renderable;
 import de.timweb.ld48.minimalism.interfaces.Updateable;
 import de.timweb.ld48.minimalism.util.Graphics;
 import de.timweb.ld48.minimalism.util.ImageLoader;
-import de.timweb.ld48.minimalism.util.RandomUtil;
+import de.timweb.ld48.minimalism.util.LevelLoader;
 import de.timweb.ld48.minimalism.util.Vector2d;
 
 public class World implements Updateable, Renderable {
-	public static final int		WORLD_01		= 1;
-	private static final int	TILE_SIZE		= 20;
+	public static final int	WORLD_01		= 1;
+	public static final int	TILE_X			= 50;
+	public static final int	TILE_Y			= 30;
+	public static final int	TILE_SIZE		= 20;
 
-	private static World		instance;
+	private static World	instance;
 
-	private Tile[][]			tiles;
-	private int					offsetX			= 0;
-	private int					offsetY			= 0;
-	private double				gravity			= 0.01;
+	private Tile[][]		tiles;
+	private double			gravity			= 0.01;
 
-	private boolean				showTextures	= true;
-	private List<Entity>		entities		= new ArrayList<Entity>();
+	private boolean			isFinished		= false;
+	private boolean			showTextures	= true;
+	private List<Entity>	entities		= new ArrayList<Entity>();
 
 	public World(final int level) {
-		switch (level) {
-		case WORLD_01:
-			offsetX = 0;
-			offsetY = 0;
-
-			entities.add(new PushEntity(new Vector2d(260, 575)));
-			entities.add(new GrowEntity(new Vector2d(391, 571)));
-
-			tiles = new Tile[30][50];
-			initTiles(level);
-			break;
-		default:
-			break;
-		}
+		LevelLoader.loadLevel(level, this);
 
 		instance = this;
-	}
 
-	private void initTiles(final int level) {
-		for (int y = 0; y < tiles.length; y++) {
-			for (int x = 0; x < tiles[0].length; x++) {
-				if (RandomUtil.randBoolean(0.98))
-					tiles[y][x] = Tile.AIR;
-				else
-					tiles[y][x] = Tile.GROUND;
-				if (y == tiles.length - 1)
-					tiles[y][x] = Tile.GROUND;
-			}
-		}
-
+		// TODO-01: Ende of World
+		// TODO-02: Box
+		// TODO-03: action-special
+		// TODO-04: weapon-special
+		// TODO-05: gravity-special
 	}
 
 	@Override
 	public void render(final Graphics g) {
 		g.setColor(Color.black);
 
-		g.g().drawRect(offsetX, offsetY, tiles[0].length * TILE_SIZE, tiles.length * TILE_SIZE);
+		g.g().drawRect(0, 0, tiles[0].length * TILE_SIZE, tiles.length * TILE_SIZE);
 		for (int y = 0; y < tiles.length; y++) {
 			for (int x = 0; x < tiles[0].length; x++) {
 				if (tiles[y][x].isSolid()) {
 					if (showTextures)
-						g.drawImage(ImageLoader.tile_glass_grey, x * TILE_SIZE + offsetX, y * TILE_SIZE + offsetY);
+						g.drawImage(ImageLoader.tile_glass_grey, x * TILE_SIZE, y * TILE_SIZE);
 					else
-						g.g().fillRect(x * TILE_SIZE + offsetX, y * TILE_SIZE + offsetY, TILE_SIZE, TILE_SIZE);
+						g.g().fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
 				}
 			}
 		}
@@ -101,7 +80,6 @@ public class World implements Updateable, Renderable {
 	public boolean isValidPos(final Vector2d pos) {
 		Vector2d copy = pos.copy();
 
-		copy.add(-offsetX, -offsetY);
 		copy.x /= TILE_SIZE;
 		copy.y /= TILE_SIZE;
 
@@ -127,5 +105,21 @@ public class World implements Updateable, Renderable {
 		}
 
 		return contains;
+	}
+
+	public void finish() {
+		isFinished = true;
+	}
+
+	public boolean isFinished() {
+		return isFinished;
+	}
+
+	public void addEntity(final Entity e) {
+		entities.add(e);
+	}
+
+	public void setTiles(final Tile[][] tiles) {
+		this.tiles = tiles;
 	}
 }

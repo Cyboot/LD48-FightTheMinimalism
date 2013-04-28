@@ -33,6 +33,7 @@ public class Canvas extends java.awt.Canvas implements Runnable {
 		Thread t = new Thread(this);
 
 		ImageLoader.init();
+		Graphics.init();
 		Game.getInstance().restart();
 		t.start();
 	}
@@ -77,8 +78,8 @@ public class Canvas extends java.awt.Canvas implements Runnable {
 
 		game.render(g);
 
-		g.setColor(Color.red);
-		g.g().drawString("FPS: " + fps, WIDTH - 60, 15);
+		g.setColor(Color.black);
+		g.drawText("FPS: " + fps, WIDTH - 80, 20, Graphics.font_20);
 
 		g.dispose();
 		Toolkit.getDefaultToolkit().sync();

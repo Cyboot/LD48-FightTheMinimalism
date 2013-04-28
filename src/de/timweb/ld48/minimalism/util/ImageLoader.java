@@ -10,6 +10,9 @@ import de.timweb.ld48.minimalism.Main;
 public class ImageLoader {
 	public static BufferedImage	tile_glass_grey;
 	public static BufferedImage	tile_glass_black;
+
+	public static BufferedImage	specials_push;
+
 	public static BufferedImage	hero_simple_left_1;
 	public static BufferedImage	hero_simple_left_2;
 	public static BufferedImage	hero_simple_left_3;
@@ -28,6 +31,8 @@ public class ImageLoader {
 			System.out.println("loading Images... ");
 			tile_glass_grey = readImage("tile_glass_grey.png");
 			tile_glass_black = readImage("tile_glass_black.png");
+
+			specials_push = readImage("specials_push.png");
 
 
 			BufferedImage hero = readImage("hero_simple.png");

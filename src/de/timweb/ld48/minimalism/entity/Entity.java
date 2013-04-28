@@ -7,7 +7,7 @@ import de.timweb.ld48.minimalism.world.World;
 
 public abstract class Entity implements Updateable, Renderable {
 	protected final double	SPEED		= 0.0005;
-	protected final double	MAXSPEED	= SPEED * 100;
+	protected final double	MAXSPEED	= SPEED * 500;
 
 	protected Vector2d		pos;
 	protected Vector2d		direction	= new Vector2d();
@@ -69,18 +69,28 @@ public abstract class Entity implements Updateable, Renderable {
 
 		// Slow down direction
 		if (direction.x > 0)
-			direction.x -= SPEED / 3 * delta;
+			direction.x -= SPEED / 2 * delta;
 		if (direction.x < 0)
-			direction.x += SPEED / 3 * delta;
+			direction.x += SPEED / 2 * delta;
 		if (direction.y > 0)
-			direction.y -= SPEED / 3 * delta;
+			direction.y -= SPEED / 2 * delta;
 		if (direction.y < 0)
-			direction.y += SPEED / 3 * delta;
+			direction.y += SPEED / 2 * delta;
 
-		if (Math.abs(direction.x) < SPEED * 4)
+		// System.out.println(direction.x);
+
+		// Stop if very slow
+		if (Math.abs(direction.x) < SPEED / 2 * delta)
 			direction.x = 0;
-		if (Math.abs(direction.y) < SPEED * 4)
+		if (Math.abs(direction.y) < SPEED / 2 * delta)
 			direction.y = 0;
+
+		// not to fast (MAXSPEED)
+		if (direction.x > MAXSPEED)
+			direction.x = MAXSPEED;
+		if (direction.x < -MAXSPEED)
+			direction.x = -MAXSPEED;
+
 		// System.out.println("dir: " + direction + " ---- gravity: " +
 		// gravity);
 

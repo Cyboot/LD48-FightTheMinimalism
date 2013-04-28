@@ -27,7 +27,6 @@ public class Game implements Updateable, Renderable {
 	@Override
 	public void update(final int delta) {
 		if (currentLevel.isFinished()) {
-			// TODO: next Level
 			System.out.println("Level comlete...");
 			System.out.println("New Level");
 		}

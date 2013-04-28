@@ -1,36 +1,40 @@
 package de.timweb.ld48.minimalism.entity;
 
-import java.awt.Color;
+import java.awt.image.BufferedImage;
 
-import de.timweb.ld48.minimalism.game.Game;
 import de.timweb.ld48.minimalism.util.Graphics;
+import de.timweb.ld48.minimalism.util.ImageLoader;
 import de.timweb.ld48.minimalism.util.Vector2d;
 
-public class PushEntity extends Entity {
-	private static final double	SIZE		= 20;
-	private static final double	MIN_DIST	= SIZE;
-	private Game				game		= Game.getInstance();
+public class PushEntity extends NonSolidEntity {
+	private static final int	MAX_ANIM_CYLE	= 1000;
+
+	private int					animCyle		= 0;
 
 	public PushEntity(final Vector2d pos) {
 		super(pos);
-
 	}
 
 	@Override
 	public void update(final int delta) {
-		PlayerEntity player = game.getPlayer();
+		super.update(delta);
 
-		double dist = player.getPos().distance(pos);
-		if (dist < MIN_DIST) {
-			direction = new Vector2d(0, -0.5);
-			player.setDirection(direction);
-		}
+		animCyle += delta;
+		animCyle %= MAX_ANIM_CYLE;
 	}
+
 
 	@Override
 	public void render(final Graphics g) {
-		g.setColor(Color.blue);
-		g.fillRect(pos.x - SIZE / 2, pos.y - SIZE / 2, SIZE, SIZE);
+		BufferedImage img = ImageLoader.getSubImage(ImageLoader.specials_push, (int) (animCyle / (MAX_ANIM_CYLE / 6.)),
+				0, 20);
+		g.drawImage(img, pos.x, pos.y);
+	}
+
+	@Override
+	public void collideWithPlayer(final PlayerEntity player) {
+		direction = new Vector2d(0, -0.5);
+		player.setDirection(direction);
 	}
 
 }
