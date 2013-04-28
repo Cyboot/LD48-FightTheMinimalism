@@ -76,7 +76,7 @@ public class MinLevel extends Level {
 			blend.renderLevelBlend(g);
 
 
-		g.setColor(Color.black);
+		g.setColor(Color.gray);
 		if (titelTimeleft > 0) {
 			g.drawText("Level " + level, Canvas.WIDTH / 2 - 100, Canvas.HEIGHT / 2 - 150, Graphics.font_50);
 
@@ -162,9 +162,9 @@ public class MinLevel extends Level {
 			}
 
 			// System.out.println(rect2.width);
-			g.setColor(Color.gray);
+			g.setColor(Color.black);
 			g.fillRect(rect.x, rect.y, rect.width, rect.height);
-			g.setColor(Color.gray);
+			g.setColor(Color.black);
 			g.fillRect(rect2.x, rect2.y, rect2.width, rect2.height);
 		}
 

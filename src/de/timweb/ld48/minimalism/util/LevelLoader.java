@@ -6,11 +6,13 @@ import java.io.InputStreamReader;
 
 import de.timweb.ld48.minimalism.Main;
 import de.timweb.ld48.minimalism.entity.ActionEntity;
+import de.timweb.ld48.minimalism.entity.ActionRocketEntity;
 import de.timweb.ld48.minimalism.entity.ActionWallEntity;
 import de.timweb.ld48.minimalism.entity.BoxEntity;
 import de.timweb.ld48.minimalism.entity.EnemyEntity;
 import de.timweb.ld48.minimalism.entity.GrowEntity;
 import de.timweb.ld48.minimalism.entity.PushEntity;
+import de.timweb.ld48.minimalism.entity.SpikeEntity;
 import de.timweb.ld48.minimalism.entity.WorldEndEntity;
 import de.timweb.ld48.minimalism.world.Tile;
 import de.timweb.ld48.minimalism.world.World;
@@ -47,7 +49,8 @@ public class LevelLoader {
 		for (int x = 0; x < line.length(); x++) {
 			Tile tile = null;
 
-			switch (line.charAt(x)) {
+			char c = line.charAt(x);
+			switch (c) {
 			case '#':
 				tile = Tile.GROUND;
 				break;
@@ -79,8 +82,16 @@ public class LevelLoader {
 				tile = Tile.AIR;
 				world.addEntity(new EnemyEntity(new Vector2d(x * World.TILE_SIZE, y * World.TILE_SIZE)));
 				break;
-			default:
+			case 'r':
 				tile = Tile.AIR;
+				world.addEntity(new ActionRocketEntity(new Vector2d(x * World.TILE_SIZE, y * World.TILE_SIZE)));
+				break;
+			case '9':
+				tile = Tile.GROUND_INVISIBLE;
+				world.addEntity(new SpikeEntity(new Vector2d(x * World.TILE_SIZE, y * World.TILE_SIZE)));
+				break;
+			default:
+				tile = Tile.getByChar(c);
 				break;
 			}
 

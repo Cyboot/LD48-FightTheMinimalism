@@ -10,6 +10,19 @@ import de.timweb.ld48.minimalism.Main;
 public class ImageLoader {
 	public static BufferedImage	tile_glass_grey;
 	public static BufferedImage	tile_glass_black;
+	public static BufferedImage	tile_wood;
+	public static BufferedImage	tile_stone;
+	public static BufferedImage	tile_lehm;
+	public static BufferedImage	tile_grass;
+	public static BufferedImage	tile_dirt;
+	public static BufferedImage	spike;
+
+	public static BufferedImage	rocket_blue;
+	public static BufferedImage	rocket_green;
+	public static BufferedImage	rocket_orange;
+	public static BufferedImage	rocket_purple;
+	public static BufferedImage	rocket_red;
+	public static BufferedImage	rocket_yellow;
 
 	public static BufferedImage	specials_push;
 
@@ -34,6 +47,19 @@ public class ImageLoader {
 			System.out.println("loading Images... ");
 			tile_glass_grey = readImage("tile_glass_grey.png");
 			tile_glass_black = readImage("tile_glass_black.png");
+			tile_wood = readImage("tile_wood.png");
+			tile_stone = readImage("tile_stone.png");
+			tile_lehm = readImage("tile_lehm.png");
+			tile_grass = readImage("tile_grass.png");
+			tile_dirt = readImage("tile_dirt.png");
+			spike = readImage("spike.png");
+
+			rocket_blue = readImage("rocket_blue.png");
+			rocket_green = readImage("rocket_green.png");
+			rocket_orange = readImage("rocket_orange.png");
+			rocket_purple = readImage("rocket_purple.png");
+			rocket_red = readImage("rocket_red.png");
+			rocket_yellow = readImage("rocket_yellow.png");
 
 			specials_push = readImage("specials_push.png");
 

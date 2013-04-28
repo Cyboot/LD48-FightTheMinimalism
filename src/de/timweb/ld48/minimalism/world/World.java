@@ -12,7 +12,6 @@ import de.timweb.ld48.minimalism.interfaces.CollidableEntity;
 import de.timweb.ld48.minimalism.interfaces.Renderable;
 import de.timweb.ld48.minimalism.interfaces.Updateable;
 import de.timweb.ld48.minimalism.util.Graphics;
-import de.timweb.ld48.minimalism.util.ImageLoader;
 import de.timweb.ld48.minimalism.util.LevelLoader;
 import de.timweb.ld48.minimalism.util.Vector2d;
 
@@ -31,14 +30,12 @@ public class World implements Updateable, Renderable {
 	private boolean			showTextures	= true;
 	private List<Entity>	entities		= new ArrayList<Entity>();
 	private String			description		= null;
+	private List<Entity>	entitiesToAdd	= new ArrayList<Entity>();
 
 	public World(final int level) {
 		LevelLoader.loadLevel(level, this);
 
 		instance = this;
-
-		// TODO-04: weapon-special
-		// TODO-05: gravity-special
 	}
 
 	@Override
@@ -48,12 +45,7 @@ public class World implements Updateable, Renderable {
 		g.g().drawRect(0, 0, tiles[0].length * TILE_SIZE, tiles.length * TILE_SIZE);
 		for (int y = 0; y < tiles.length; y++) {
 			for (int x = 0; x < tiles[0].length; x++) {
-				if (tiles[y][x].isSolid()) {
-					if (showTextures)
-						g.drawImage(ImageLoader.tile_glass_grey, x * TILE_SIZE, y * TILE_SIZE);
-					else
-						g.g().fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-				}
+				tiles[y][x].render(g, x * TILE_SIZE, y * TILE_SIZE);
 			}
 		}
 
@@ -64,6 +56,11 @@ public class World implements Updateable, Renderable {
 
 	@Override
 	public void update(final int delta) {
+		if (!entitiesToAdd.isEmpty()) {
+			entities.addAll(entitiesToAdd);
+			entitiesToAdd.clear();
+		}
+
 		List<Entity> deadEntites = null;
 
 		for (Entity e : entities) {
@@ -131,7 +128,7 @@ public class World implements Updateable, Renderable {
 	}
 
 	public void addEntity(final Entity e) {
-		entities.add(e);
+		entitiesToAdd.add(e);
 	}
 
 	public List<Entity> getEntities() {
