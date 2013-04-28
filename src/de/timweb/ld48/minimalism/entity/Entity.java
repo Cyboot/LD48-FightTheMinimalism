@@ -15,7 +15,7 @@ public abstract class Entity implements Updateable, Renderable {
 
 	private boolean			isAlive				= true;
 	protected boolean		isGravityEffected	= true;
-	private boolean			isSolid				= true;
+	protected boolean		isSolid				= true;
 
 	public Entity() {
 		this(new Vector2d());

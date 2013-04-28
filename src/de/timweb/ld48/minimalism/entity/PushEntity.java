@@ -34,7 +34,7 @@ public class PushEntity extends NonSolidEntity {
 
 	@Override
 	public void collideWithPlayer(final PlayerEntity player) {
-		direction = new Vector2d(0, -0.5);
+		direction = new Vector2d(0, -0.75);
 		player.setDirection(direction);
 
 		SoundEffect.JUMP.play();

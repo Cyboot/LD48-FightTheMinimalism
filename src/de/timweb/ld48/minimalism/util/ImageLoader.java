@@ -17,6 +17,11 @@ public class ImageLoader {
 	public static BufferedImage	tile_dirt;
 	public static BufferedImage	spike;
 
+	public static BufferedImage	background_norm;
+	public static BufferedImage	background_complex;
+	public static BufferedImage	shade_black;
+	public static BufferedImage	shade_white;
+
 	public static BufferedImage	rocket_blue;
 	public static BufferedImage	rocket_green;
 	public static BufferedImage	rocket_orange;
@@ -53,6 +58,12 @@ public class ImageLoader {
 			tile_grass = readImage("tile_grass.png");
 			tile_dirt = readImage("tile_dirt.png");
 			spike = readImage("spike.png");
+
+			background_norm = readImage("background_norm.png");
+			background_complex = readImage("background_complex.png");
+			shade_black = readImage("shade_black.png");
+			shade_white = readImage("shade_white.png");
+
 
 			rocket_blue = readImage("rocket_blue.png");
 			rocket_green = readImage("rocket_green.png");

@@ -7,6 +7,7 @@ import de.timweb.ld48.minimalism.engine.Canvas;
 import de.timweb.ld48.minimalism.engine.Controls;
 import de.timweb.ld48.minimalism.entity.PlayerEntity;
 import de.timweb.ld48.minimalism.util.Graphics;
+import de.timweb.ld48.minimalism.util.ImageLoader;
 import de.timweb.ld48.minimalism.util.SoundEffect;
 import de.timweb.ld48.minimalism.util.Vector2d;
 import de.timweb.ld48.minimalism.world.World;
@@ -24,7 +25,7 @@ public class MinLevel extends Level {
 	private int					levelType			= LEVEL_SIMPLE;
 
 	public MinLevel() {
-		SoundEffect.MUSIC_3.loop();
+		// SoundEffect.MUSIC_3.loop();
 		SoundEffect.muteSound();
 		newLevel(true);
 	}
@@ -36,6 +37,11 @@ public class MinLevel extends Level {
 	public void newLevel(final boolean newlevel) {
 		if (newlevel)
 			level++;
+
+		if (level == 7)
+			levelType = LEVEL_MID;
+		if (level == 13)
+			levelType = LEVEL_COMPLEX;
 
 		world = new World(level);
 		player = new PlayerEntity(new Vector2d(30, Canvas.HEIGHT - 150));
@@ -73,6 +79,14 @@ public class MinLevel extends Level {
 
 	@Override
 	public void render(final Graphics g) {
+		if (levelType == LEVEL_MID) {
+			g.drawImage(ImageLoader.background_norm, 0, 0);
+		}
+		if (levelType == LEVEL_COMPLEX) {
+			g.drawImage(ImageLoader.background_complex, 0, 0);
+			g.drawImage(ImageLoader.shade_white, 0, 0);
+		}
+
 		world.render(g);
 		player.render(g);
 

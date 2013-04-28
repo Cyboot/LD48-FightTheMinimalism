@@ -12,13 +12,20 @@ public class ActionWallEntity extends Entity implements CollidableEntity, Action
 	private static final int	SIZE	= 20;
 	protected Rectangle			collisionBox;
 
-	public ActionWallEntity(final Vector2d pos) {
+	public ActionWallEntity(final Vector2d pos, final boolean startSolid) {
 		super(pos);
-		collisionBox = new Rectangle(pos.x(), pos.y(), SIZE, SIZE);
+
+		isSolid = startSolid;
+		collisionBox = new Rectangle();
+		if (isSolid)
+			makeSolid();
 	}
 
 	@Override
 	public void render(final Graphics g) {
+		if (!isSolid)
+			return;
+
 		g.setColor(Color.cyan);
 		g.drawRect(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height);
 	}
@@ -30,7 +37,15 @@ public class ActionWallEntity extends Entity implements CollidableEntity, Action
 
 	@Override
 	public void actionPerformed() {
-		kill();
+		if (isSolid)
+			kill();
+		else
+			makeSolid();
+	}
+
+	private void makeSolid() {
+		collisionBox = new Rectangle(pos.x(), pos.y(), SIZE, SIZE);
+		isSolid = true;
 	}
 
 	@Override

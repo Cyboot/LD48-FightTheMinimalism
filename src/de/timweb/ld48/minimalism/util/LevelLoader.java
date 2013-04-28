@@ -74,15 +74,19 @@ public class LevelLoader {
 				tile = Tile.AIR;
 				world.addEntity(new ActionEntity(new Vector2d(x * World.TILE_SIZE, y * World.TILE_SIZE)));
 				break;
-			case 'a':
+			case 'W':
 				tile = Tile.AIR;
-				world.addEntity(new ActionWallEntity(new Vector2d(x * World.TILE_SIZE, y * World.TILE_SIZE)));
+				world.addEntity(new ActionWallEntity(new Vector2d(x * World.TILE_SIZE, y * World.TILE_SIZE), true));
+				break;
+			case 'w':
+				tile = Tile.AIR;
+				world.addEntity(new ActionWallEntity(new Vector2d(x * World.TILE_SIZE, y * World.TILE_SIZE), false));
 				break;
 			case 'e':
 				tile = Tile.AIR;
 				world.addEntity(new EnemyEntity(new Vector2d(x * World.TILE_SIZE, y * World.TILE_SIZE)));
 				break;
-			case 'r':
+			case 'R':
 				tile = Tile.AIR;
 				world.addEntity(new ActionRocketEntity(new Vector2d(x * World.TILE_SIZE, y * World.TILE_SIZE)));
 				break;

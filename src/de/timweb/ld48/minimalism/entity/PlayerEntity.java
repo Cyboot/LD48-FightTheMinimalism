@@ -50,7 +50,6 @@ public class PlayerEntity extends Entity {
 			lastShot = 0;
 		}
 
-		// TODO-03: Jump enable/disable
 		if (controls.wasSpace() && isJumpEnable && gravity.length() < 0.5) {
 			SoundEffect.JUMP.play();
 			direction.add(0, -SPEED * 50 * delta);
