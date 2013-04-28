@@ -9,8 +9,6 @@ import de.timweb.ld48.minimalism.util.ImageLoader;
 import de.timweb.ld48.minimalism.util.Vector2d;
 
 public class PlayerEntity extends Entity {
-	private final int	SIZE			= 18;
-
 	private Controls	controls		= Controls.getInstance();
 
 	private Rectangle	collisionBox	= new Rectangle(0, 0, 3, 3);

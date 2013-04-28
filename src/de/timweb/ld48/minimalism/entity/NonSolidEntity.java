@@ -10,7 +10,7 @@ public abstract class NonSolidEntity extends Entity {
 	private static final int	SIZE	= 20;
 	private Game				game	= Game.getInstance();
 
-	private Rectangle			collisionBox;
+	protected Rectangle			collisionBox;
 
 	public NonSolidEntity(final Vector2d pos) {
 		super(pos);

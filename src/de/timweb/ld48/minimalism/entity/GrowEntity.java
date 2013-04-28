@@ -4,13 +4,13 @@ import java.awt.Color;
 import java.awt.Rectangle;
 
 import de.timweb.ld48.minimalism.game.Game;
+import de.timweb.ld48.minimalism.interfaces.CollidableEntity;
 import de.timweb.ld48.minimalism.util.Graphics;
 import de.timweb.ld48.minimalism.util.Vector2d;
 
-public class GrowEntity extends Entity {
+public class GrowEntity extends Entity implements CollidableEntity {
 	private static final double	GROWSPEED	= 0.2;
 	private static final int	SIZE		= 20;
-	private static final double	MIN_DIST	= SIZE;
 	private static final double	MAX_HEIGHT	= SIZE * 10;
 	private Game				game		= Game.getInstance();
 
@@ -66,14 +66,7 @@ public class GrowEntity extends Entity {
 
 
 		PlayerEntity player = game.getPlayer();
-		double dist = player.getPos().distance(pos);
-		// if (dist < MIN_DIST && !isShrinking) {
-		// isGrowing = true;
-		// isShrinking = false;
-		// }
 
-		// System.out.println(collisionBox.x + " --> player " +
-		// player.getPos().x);
 		if (Math.abs(player.pos.y - collisionBox.y) < SIZE && collisionBox.intersects(player.getCollisionBox())) {
 			player.pos.y = collisionBox.getY() - 1;
 			isGrowing = true;
@@ -82,6 +75,7 @@ public class GrowEntity extends Entity {
 
 	}
 
+	@Override
 	public Rectangle getCollisionBox() {
 		return collisionBox;
 	}

@@ -5,8 +5,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import de.timweb.ld48.minimalism.Main;
+import de.timweb.ld48.minimalism.entity.ActionEntity;
+import de.timweb.ld48.minimalism.entity.ActionWallEntity;
+import de.timweb.ld48.minimalism.entity.BoxEntity;
 import de.timweb.ld48.minimalism.entity.GrowEntity;
 import de.timweb.ld48.minimalism.entity.PushEntity;
+import de.timweb.ld48.minimalism.entity.WorldEndEntity;
 import de.timweb.ld48.minimalism.world.Tile;
 import de.timweb.ld48.minimalism.world.World;
 
@@ -51,6 +55,23 @@ public class LevelLoader {
 			case 'G':
 				tile = Tile.AIR;
 				world.addEntity(new GrowEntity(new Vector2d(x * World.TILE_SIZE, y * World.TILE_SIZE)));
+				break;
+			case '*':
+				tile = Tile.AIR;
+				world.addEntity(new WorldEndEntity(new Vector2d(x * World.TILE_SIZE, y * World.TILE_SIZE)));
+				break;
+			case 'B':
+				tile = Tile.AIR;
+				world.addEntity(new BoxEntity(new Vector2d(x * World.TILE_SIZE, y * World.TILE_SIZE)));
+				break;
+			case 'A':
+				tile = Tile.AIR;
+				world.addEntity(new ActionEntity(new Vector2d(x * World.TILE_SIZE, y * World.TILE_SIZE)));
+				break;
+			case 'a':
+				tile = Tile.AIR;
+				world.addEntity(new ActionWallEntity(new Vector2d(x * World.TILE_SIZE, y * World.TILE_SIZE)));
+				break;
 			default:
 				tile = Tile.AIR;
 				break;

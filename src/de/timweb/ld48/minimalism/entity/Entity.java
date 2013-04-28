@@ -43,7 +43,7 @@ public abstract class Entity implements Updateable, Renderable {
 			if (isDirectionValid) {
 				target.set(pos);
 				target.add(direction.x * delta / STEPS, direction.y * delta / STEPS);
-				isDirectionValid = world.isValidPos(target);
+				isDirectionValid = world.isValidPos(target, this);
 			}
 			if (isDirectionValid || !isSolid) {
 				pos.set(target);
@@ -52,7 +52,7 @@ public abstract class Entity implements Updateable, Renderable {
 			if (isGravityValid && isSolid) {
 				target.set(pos);
 				target.add(0, gravity.y / STEPS);
-				isGravityValid = world.isValidPos(target);
+				isGravityValid = world.isValidPos(target, this);
 			}
 			if (isGravityValid && isSolid) {
 				pos.set(target);

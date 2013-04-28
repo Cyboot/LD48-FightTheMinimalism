@@ -5,8 +5,10 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.timweb.ld48.minimalism.entity.ActionEntity;
 import de.timweb.ld48.minimalism.entity.Entity;
-import de.timweb.ld48.minimalism.entity.GrowEntity;
+import de.timweb.ld48.minimalism.interfaces.ActionListenerEntity;
+import de.timweb.ld48.minimalism.interfaces.CollidableEntity;
 import de.timweb.ld48.minimalism.interfaces.Renderable;
 import de.timweb.ld48.minimalism.interfaces.Updateable;
 import de.timweb.ld48.minimalism.util.Graphics;
@@ -34,9 +36,6 @@ public class World implements Updateable, Renderable {
 
 		instance = this;
 
-		// TODO-01: Ende of World
-		// TODO-02: Box
-		// TODO-03: action-special
 		// TODO-04: weapon-special
 		// TODO-05: gravity-special
 	}
@@ -64,9 +63,20 @@ public class World implements Updateable, Renderable {
 
 	@Override
 	public void update(final int delta) {
+		List<Entity> deadEntites = null;
+
 		for (Entity e : entities) {
 			e.update(delta);
+
+			if (!e.isAlive()) {
+				if (deadEntites == null)
+					deadEntites = new ArrayList<Entity>();
+				deadEntites.add(e);
+			}
 		}
+
+		if (deadEntites != null)
+			entities.removeAll(deadEntites);
 	}
 
 	public static World getInstance() {
@@ -77,7 +87,7 @@ public class World implements Updateable, Renderable {
 		return gravity;
 	}
 
-	public boolean isValidPos(final Vector2d pos) {
+	public boolean isValidPos(final Vector2d pos, final Entity self) {
 		Vector2d copy = pos.copy();
 
 		copy.x /= TILE_SIZE;
@@ -87,19 +97,23 @@ public class World implements Updateable, Renderable {
 		if (copy.x < 0 || copy.x > tiles[0].length || copy.y < 0 || copy.y > tiles.length) {
 			return false;
 		} else {
-			boolean collide = checkForSolidEntities(pos.copy());
+			boolean collide = checkForSolidEntities(pos.copy(), self);
 
 			// System.out.println("in raster: " + copy.x() + " : " + copy.y());
 			return !collide && !tiles[copy.y()][copy.x()].isSolid();
 		}
 	}
 
-	private boolean checkForSolidEntities(final Vector2d copy) {
+	private boolean checkForSolidEntities(final Vector2d copy, final Entity self) {
 		boolean contains = false;
 
 		for (Entity e : entities) {
-			if (e instanceof GrowEntity) {
-				Rectangle collisionBox = ((GrowEntity) e).getCollisionBox();
+			// Do not collide with yourself
+			if (e == self)
+				continue;
+
+			if (e instanceof CollidableEntity) {
+				Rectangle collisionBox = ((CollidableEntity) e).getCollisionBox();
 				contains = contains || collisionBox.contains(copy.x(), copy.y());
 			}
 		}
@@ -121,5 +135,12 @@ public class World implements Updateable, Renderable {
 
 	public void setTiles(final Tile[][] tiles) {
 		this.tiles = tiles;
+	}
+
+	public void performAction(final ActionEntity actionEntity) {
+		for (Entity e : entities) {
+			if (e instanceof ActionListenerEntity)
+				((ActionListenerEntity) e).actionPerformed();
+		}
 	}
 }
