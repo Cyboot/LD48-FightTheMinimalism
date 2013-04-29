@@ -118,18 +118,23 @@ public enum SoundEffect {
 		} else {
 			switch (Game.getInstance().getCurrentLevel().getLevelType()) {
 			case Level.LEVEL_SIMPLE:
-				SoundEffect.MUSIC_1.stop();
+				SoundEffect.MUSIC_1.loop();
 				break;
 			case Level.LEVEL_MID:
-				SoundEffect.MUSIC_2.stop();
+				SoundEffect.MUSIC_2.loop();
 				break;
 			case Level.LEVEL_COMPLEX:
-				SoundEffect.MUSIC_3.stop();
+				SoundEffect.MUSIC_3.loop();
 				break;
 			}
 			isMusicMuted = false;
 		}
 	}
+
+	public static void setMuted(final boolean mute) {
+		isMuted = mute;
+	}
+
 
 	public static void muteSound() {
 		if (!isMuted) {

@@ -3,6 +3,8 @@ package de.timweb.ld48.minimalism.engine;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import de.timweb.ld48.minimalism.util.SoundEffect;
+
 public class Controls implements KeyListener {
 	private static Controls	instance	= new Controls();
 
@@ -13,6 +15,7 @@ public class Controls implements KeyListener {
 	private boolean			isRIGHT		= false;
 	private boolean			wasSpace	= false;
 
+	private boolean			wasEnter;
 	private boolean			wasF12;
 	private boolean			wasR;
 
@@ -47,6 +50,9 @@ public class Controls implements KeyListener {
 		case KeyEvent.VK_R:
 			wasR = true;
 			break;
+		case KeyEvent.VK_ENTER:
+			wasEnter = true;
+			break;
 		}
 	}
 
@@ -68,6 +74,13 @@ public class Controls implements KeyListener {
 		case KeyEvent.VK_CONTROL:
 			isCTRL = false;
 			break;
+		case KeyEvent.VK_S:
+			SoundEffect.muteSound();
+			break;
+		case KeyEvent.VK_M:
+			SoundEffect.muteMusic();
+			break;
+
 		}
 	}
 
@@ -105,6 +118,13 @@ public class Controls implements KeyListener {
 	public boolean wasR() {
 		boolean result = wasR;
 		wasR = false;
+
+		return result;
+	}
+
+	public boolean wasEnter() {
+		boolean result = wasEnter;
+		wasEnter = false;
 
 		return result;
 	}

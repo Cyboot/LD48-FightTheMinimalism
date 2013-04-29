@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 import de.timweb.ld48.minimalism.game.Game;
+import de.timweb.ld48.minimalism.game.Level;
 import de.timweb.ld48.minimalism.interfaces.ActionListenerEntity;
 import de.timweb.ld48.minimalism.util.Graphics;
 import de.timweb.ld48.minimalism.util.ImageLoader;
@@ -22,9 +23,12 @@ public class ActionRocketEntity extends EnemyEntity implements ActionListenerEnt
 	private BufferedImage	img;
 	private Color			color;
 
+	private Vector2d		startPos;
 
 	public ActionRocketEntity(final Vector2d pos, final Color color) {
 		super(pos);
+
+		startPos = pos.copy();
 
 		this.color = color;
 		if (color == null) {
@@ -83,7 +87,7 @@ public class ActionRocketEntity extends EnemyEntity implements ActionListenerEnt
 
 	@Override
 	public void update(final int delta) {
-		if (!isActive)
+		if (!isActive && !Game.getInstance().getCurrentLevel().isWon())
 			return;
 
 		pos.y -= 400. * delta / DURATION;
@@ -91,6 +95,10 @@ public class ActionRocketEntity extends EnemyEntity implements ActionListenerEnt
 		timeLeft -= delta;
 		if (timeLeft < 0) {
 			kill();
+
+			if (Game.getInstance().getCurrentLevel().getLevelType() == Level.LEVEL_COMPLEX) {
+				World.getInstance().addEntity(new ActionRocketEntity(startPos, color));
+			}
 
 			for (int x = -2; x <= 2; x++) {
 				for (int y = -2; y <= 2; y++) {

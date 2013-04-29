@@ -17,6 +17,7 @@ public class ImageLoader {
 	public static BufferedImage	tile_dirt;
 	public static BufferedImage	spike;
 
+	public static BufferedImage	start_screen;
 	public static BufferedImage	background_norm;
 	public static BufferedImage	background_complex;
 	public static BufferedImage	shade_black;
@@ -63,6 +64,7 @@ public class ImageLoader {
 			background_complex = readImage("background_complex.png");
 			shade_black = readImage("shade_black.png");
 			shade_white = readImage("shade_white.png");
+			start_screen = readImage("start_screen.png");
 
 
 			rocket_blue = readImage("rocket_blue.png");

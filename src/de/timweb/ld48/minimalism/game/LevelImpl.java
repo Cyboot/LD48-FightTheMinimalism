@@ -12,7 +12,7 @@ import de.timweb.ld48.minimalism.util.SoundEffect;
 import de.timweb.ld48.minimalism.util.Vector2d;
 import de.timweb.ld48.minimalism.world.World;
 
-public class MinLevel extends Level {
+public class LevelImpl extends Level {
 	private static final int	MAX_TITEL			= 3000;
 	private static final int	MAX_LEVEL_BLEND		= 800;
 	private World				world;
@@ -23,10 +23,12 @@ public class MinLevel extends Level {
 	private int					levelBlendTimeleft	= 0;
 	private boolean				levelFinished		= false;
 	private int					levelType			= LEVEL_SIMPLE;
+	private boolean				isWin				= false;
+	private int					winTextTimeLeft;
 
-	public MinLevel() {
-		// SoundEffect.MUSIC_3.loop();
-		SoundEffect.muteSound();
+	public LevelImpl() {
+		SoundEffect.MUSIC_1.loop();
+		// SoundEffect.muteSound();
 		newLevel(true);
 	}
 
@@ -75,6 +77,9 @@ public class MinLevel extends Level {
 		if (levelFinished && levelBlendTimeleft < 0) {
 			newLevel(true);
 		}
+
+		if (isWin)
+			winTextTimeLeft -= delta;
 	}
 
 	@Override
@@ -86,8 +91,12 @@ public class MinLevel extends Level {
 		if (levelType == LEVEL_COMPLEX) {
 			g.drawImage(ImageLoader.background_complex, 0, 0);
 
-			if (levelBlendTimeleft < 0)
-				g.drawImage(ImageLoader.shade_white, 0, 0);
+			// if (levelBlendTimeleft < 0 && !isWin)
+			// g.drawImage(ImageLoader.shade_white, 0, 0);
+
+			if (isWin)
+				g.drawImage(ImageLoader.shade_black, 0, 0);
+
 		}
 
 		world.render(g);
@@ -103,9 +112,18 @@ public class MinLevel extends Level {
 		}
 		if (levelBlendTimeleft >= -50)
 			blend.renderLevelBlend(g);
+
+		if (isWin && winTextTimeLeft < 0) {
+			SoundEffect.setMuted(true);
+
+			g.setColor(Color.white);
+			g.drawText("The End", Canvas.WIDTH / 2 - 220, Canvas.HEIGHT / 2 + 50, Graphics.font_100);
+			g.drawText("Thanks for playing!", Canvas.WIDTH / 2 - 120, Canvas.HEIGHT / 2 + 100, Graphics.font_20);
+		}
 	}
 
 	private LevelBlend	blend	= new LevelBlend();
+
 
 	private class LevelBlend {
 		private Rectangle	rect		= new Rectangle();
@@ -197,10 +215,26 @@ public class MinLevel extends Level {
 
 	@Override
 	public void increaseComplexity() {
-		if (level == 6)
+		if (level == 6) {
+			SoundEffect.stopMusic();
 			levelType = LEVEL_MID;
-		if (level == 11)
+			SoundEffect.MUSIC_2.loop();
+		}
+		if (level == 11) {
+			SoundEffect.stopMusic();
 			levelType = LEVEL_COMPLEX;
+			SoundEffect.MUSIC_3.loop();
+		}
+		if (level == 19) {
+			if (!isWin)
+				winTextTimeLeft = 3000;
+			isWin = true;
+		}
+	}
+
+	@Override
+	public boolean isWon() {
+		return isWin;
 	}
 
 	@Override
