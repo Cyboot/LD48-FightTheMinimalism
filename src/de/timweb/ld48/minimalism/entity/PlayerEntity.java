@@ -53,9 +53,9 @@ public class PlayerEntity extends Entity {
 			lastShot = 0;
 		}
 
-		if (controls.wasSpace() && isJumpEnable && gravity.length() < 0.5) {
+		if (controls.wasSpace() && isJumpEnable && gravity.length() < 1) {
 			SoundEffect.JUMP.play();
-			direction.add(0, -SPEED * 50 * delta);
+			direction.add(0, -SPEED * 50 * 13);
 		}
 
 		lastShot += delta;

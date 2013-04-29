@@ -12,12 +12,13 @@ import de.timweb.ld48.minimalism.util.ImageLoader;
 public class Canvas extends java.awt.Canvas implements Runnable {
 	public static final int		WIDTH			= 1000;
 	public static final int		HEIGHT			= 600;
-	private static final long	TARGET_FPS		= 80;
-	private static final long	TARGET_DELTA	= 1000 / TARGET_FPS;
+	private static final long	TARGET_FPS		= 100;
+	private static long			TARGET_DELTA	= 1000 / TARGET_FPS;
 
 	private static Canvas		instance		= new Canvas();
 
 	private Game				game			= Game.getInstance();
+	@SuppressWarnings("unused")
 	private long				fps;
 
 
@@ -58,6 +59,8 @@ public class Canvas extends java.awt.Canvas implements Runnable {
 				bs.show();
 
 			long timepassed = System.currentTimeMillis() - start;
+			// int target_delta = 15;
+
 			if (timepassed < TARGET_DELTA) {
 				try {
 					Thread.sleep(TARGET_DELTA - timepassed);

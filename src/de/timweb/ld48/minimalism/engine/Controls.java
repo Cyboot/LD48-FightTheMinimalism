@@ -13,7 +13,8 @@ public class Controls implements KeyListener {
 	private boolean			isDOWN		= false;
 	private boolean			isLEFT		= false;
 	private boolean			isRIGHT		= false;
-	private boolean			wasSpace	= false;
+
+	private int				space		= 0;
 
 	private boolean			wasEnter;
 	private boolean			wasF12;
@@ -41,9 +42,6 @@ public class Controls implements KeyListener {
 		case KeyEvent.VK_CONTROL:
 			isCTRL = true;
 			break;
-		case KeyEvent.VK_SPACE:
-			wasSpace = true;
-			break;
 		case KeyEvent.VK_F12:
 			wasF12 = true;
 			break;
@@ -52,6 +50,10 @@ public class Controls implements KeyListener {
 			break;
 		case KeyEvent.VK_ENTER:
 			wasEnter = true;
+			break;
+		case KeyEvent.VK_SPACE:
+			if (space != 2)
+				space = 1;
 			break;
 		}
 	}
@@ -74,6 +76,9 @@ public class Controls implements KeyListener {
 		case KeyEvent.VK_CONTROL:
 			isCTRL = false;
 			break;
+		case KeyEvent.VK_SPACE:
+			space = 0;
+			break;
 		case KeyEvent.VK_S:
 			SoundEffect.muteSound();
 			break;
@@ -89,8 +94,10 @@ public class Controls implements KeyListener {
 	}
 
 	public boolean wasSpace() {
-		boolean result = wasSpace;
-		wasSpace = false;
+		boolean result = (space == 1);
+
+		if (result)
+			space = 2;
 
 		return result;
 	}

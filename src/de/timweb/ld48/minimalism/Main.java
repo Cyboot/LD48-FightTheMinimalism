@@ -19,8 +19,8 @@ public class Main {
 		frame.setContentPane(panel);
 		frame.pack();
 		frame.setResizable(false);
-		frame.setLocation(-1180, -100);
-		// frame.setLocationRelativeTo(null);
+		// frame.setLocation(-1180, -100);
+		frame.setLocationRelativeTo(null);
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);

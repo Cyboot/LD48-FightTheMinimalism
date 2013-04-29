@@ -2,6 +2,8 @@ package de.timweb.ld48.minimalism.world;
 
 import java.awt.image.BufferedImage;
 
+import de.timweb.ld48.minimalism.game.Game;
+import de.timweb.ld48.minimalism.game.Level;
 import de.timweb.ld48.minimalism.util.Graphics;
 import de.timweb.ld48.minimalism.util.ImageLoader;
 
@@ -66,9 +68,13 @@ public enum Tile {
 		if (!solid || c == '9')
 			return;
 
-		if (img != null)
+		if (img != null) {
 			g.drawImage(img, x, y);
-		else
-			g.g().fillRect(x, y, World.TILE_SIZE, World.TILE_SIZE);
+		} else {
+			if (Game.getInstance().getCurrentLevel().getLevelType() == Level.LEVEL_MID)
+				g.drawImage(ImageLoader.tile_glass_black, x, y);
+			else
+				g.g().fillRect(x, y, World.TILE_SIZE, World.TILE_SIZE);
+		}
 	}
 }

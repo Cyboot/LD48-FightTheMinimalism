@@ -91,8 +91,8 @@ public class LevelImpl extends Level {
 		if (levelType == LEVEL_COMPLEX) {
 			g.drawImage(ImageLoader.background_complex, 0, 0);
 
-			// if (levelBlendTimeleft < 0 && !isWin)
-			// g.drawImage(ImageLoader.shade_white, 0, 0);
+			if (levelBlendTimeleft < 0 && !isWin)
+				g.drawImage(ImageLoader.shade_white, 0, 0);
 
 			if (isWin)
 				g.drawImage(ImageLoader.shade_black, 0, 0);

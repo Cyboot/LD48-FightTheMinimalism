@@ -13,6 +13,7 @@ import de.timweb.ld48.minimalism.interfaces.Renderable;
 import de.timweb.ld48.minimalism.interfaces.Updateable;
 import de.timweb.ld48.minimalism.util.Graphics;
 import de.timweb.ld48.minimalism.util.LevelLoader;
+import de.timweb.ld48.minimalism.util.SoundEffect;
 import de.timweb.ld48.minimalism.util.Vector2d;
 
 public class World implements Updateable, Renderable {
@@ -27,7 +28,6 @@ public class World implements Updateable, Renderable {
 	private double			gravity			= 0.01;
 
 	private boolean			isFinished		= false;
-	private boolean			showTextures	= true;
 	private List<Entity>	entities		= new ArrayList<Entity>();
 	private String			description		= null;
 	private List<Entity>	entitiesToAdd	= new ArrayList<Entity>();
@@ -120,6 +120,9 @@ public class World implements Updateable, Renderable {
 	}
 
 	public void finish() {
+		if (!isFinished)
+			SoundEffect.LEVEL.play();
+
 		isFinished = true;
 	}
 

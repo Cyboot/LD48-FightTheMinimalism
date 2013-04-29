@@ -26,8 +26,15 @@ public abstract class Entity implements Updateable, Renderable {
 	}
 
 	@Override
-	public void update(final int delta) {
+	public void update(int delta) {
 		World world = World.getInstance();
+
+		System.out.println(delta);
+		if (delta > 25)
+			delta += 30;
+		else if (delta > 15)
+			delta += 10;
+
 		gravity.add(0, world.getGravity() * delta);
 	}
 
