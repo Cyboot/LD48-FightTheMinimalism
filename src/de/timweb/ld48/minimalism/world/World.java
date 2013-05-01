@@ -25,7 +25,7 @@ public class World implements Updateable, Renderable {
 	private static World	instance;
 
 	private Tile[][]		tiles;
-	private double			gravity			= 0.01;
+	private double			gravity			= 0.0005;
 
 	private boolean			isFinished		= false;
 	private List<Entity>	entities		= new ArrayList<Entity>();

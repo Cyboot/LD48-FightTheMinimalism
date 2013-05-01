@@ -15,6 +15,7 @@ import de.timweb.ld48.minimalism.world.World;
 
 public class PlayerEntity extends Entity {
 	private static final int	SHOOT_COOLDOWN	= 250;
+	private static final int	JUMP_COOLDOWN	= 500;
 
 	private Controls			controls		= Controls.getInstance();
 
@@ -25,6 +26,7 @@ public class PlayerEntity extends Entity {
 	private int					walkCyle		= 0;
 	private boolean				left			= false;
 	private int					lastShot		= 0;
+	private int					lastJump		= 0;
 
 
 	public PlayerEntity(final Vector2d pos) {
@@ -42,22 +44,24 @@ public class PlayerEntity extends Entity {
 			direction.add(-SPEED * delta, 0);
 			left = true;
 		}
-		if (controls.isUP()) {
-			direction.add(0, -SPEED * delta);
-		}
-		if (controls.isDOWN()) {
-			direction.add(0, SPEED * delta);
-		}
+		// if (controls.isUP()) {
+		// direction.add(0, -SPEED * delta);
+		// }
+		// if (controls.isDOWN()) {
+		// direction.add(0, SPEED * delta);
+		// }
 		if (controls.isCTRL() && isShotEnable && lastShot > SHOOT_COOLDOWN) {
 			World.getInstance().addEntity(new ShootEntity(pos.copy().add(0, -5), left));
 			lastShot = 0;
 		}
 
-		if (controls.wasSpace() && isJumpEnable && gravity.length() < 1) {
+		if (controls.wasSpace() && isJumpEnable && lastJump > JUMP_COOLDOWN && gravity.length() < 1.9) {
 			SoundEffect.JUMP.play();
 			direction.add(0, -SPEED * 50 * 13);
+			lastJump = 0;
 		}
 
+		lastJump += delta;
 		lastShot += delta;
 
 		move(delta);

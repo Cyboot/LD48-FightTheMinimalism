@@ -82,13 +82,23 @@ public enum SoundEffect {
 	}
 
 	public void loop() {
-		clips[0].loop(-1);
+		try {
+
+			clips[0].loop(-1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void stop() {
-		for (Clip c : clips) {
-			c.stop();
-			c.setFramePosition(0);
+		try {
+			for (Clip c : clips) {
+				c.stop();
+				c.setFramePosition(0);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -97,18 +107,22 @@ public enum SoundEffect {
 	}
 
 	public static void stopMusic() {
-		switch (Game.getInstance().getCurrentLevel().getLevelType()) {
-		case Level.LEVEL_SIMPLE:
-			SoundEffect.MUSIC_1.stop();
-			break;
-		case Level.LEVEL_MID:
-			SoundEffect.MUSIC_2.stop();
-			break;
-		case Level.LEVEL_COMPLEX:
-			SoundEffect.MUSIC_3.stop();
-			break;
+		try {
+			switch (Game.getInstance().getCurrentLevel().getLevelType()) {
+			case Level.LEVEL_SIMPLE:
+				SoundEffect.MUSIC_1.stop();
+				break;
+			case Level.LEVEL_MID:
+				SoundEffect.MUSIC_2.stop();
+				break;
+			case Level.LEVEL_COMPLEX:
+				SoundEffect.MUSIC_3.stop();
+				break;
+			}
+			isMusicMuted = true;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		isMusicMuted = true;
 	}
 
 	public static void muteMusic() {
@@ -116,18 +130,22 @@ public enum SoundEffect {
 			stopMusic();
 			isMusicMuted = true;
 		} else {
-			switch (Game.getInstance().getCurrentLevel().getLevelType()) {
-			case Level.LEVEL_SIMPLE:
-				SoundEffect.MUSIC_1.loop();
-				break;
-			case Level.LEVEL_MID:
-				SoundEffect.MUSIC_2.loop();
-				break;
-			case Level.LEVEL_COMPLEX:
-				SoundEffect.MUSIC_3.loop();
-				break;
+			try {
+				switch (Game.getInstance().getCurrentLevel().getLevelType()) {
+				case Level.LEVEL_SIMPLE:
+					SoundEffect.MUSIC_1.loop();
+					break;
+				case Level.LEVEL_MID:
+					SoundEffect.MUSIC_2.loop();
+					break;
+				case Level.LEVEL_COMPLEX:
+					SoundEffect.MUSIC_3.loop();
+					break;
+				}
+				isMusicMuted = false;
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			isMusicMuted = false;
 		}
 	}
 

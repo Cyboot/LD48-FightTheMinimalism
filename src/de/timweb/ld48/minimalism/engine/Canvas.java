@@ -10,16 +10,16 @@ import de.timweb.ld48.minimalism.util.Graphics;
 import de.timweb.ld48.minimalism.util.ImageLoader;
 
 public class Canvas extends java.awt.Canvas implements Runnable {
-	public static final int		WIDTH			= 1000;
-	public static final int		HEIGHT			= 600;
-	private static final long	TARGET_FPS		= 100;
-	private static long			TARGET_DELTA	= 1000 / TARGET_FPS;
+	public static final int	WIDTH			= 1000;
+	public static final int	HEIGHT			= 600;
+	private static long		TARGET_FPS		= 66;
+	private static long		TARGET_DELTA	= 1000 / TARGET_FPS;
 
-	private static Canvas		instance		= new Canvas();
+	private static Canvas	instance		= new Canvas();
 
-	private Game				game			= Game.getInstance();
+	private Game			game			= Game.getInstance();
 	@SuppressWarnings("unused")
-	private long				fps;
+	private long			fps;
 
 
 	private Canvas() {
@@ -59,7 +59,10 @@ public class Canvas extends java.awt.Canvas implements Runnable {
 				bs.show();
 
 			long timepassed = System.currentTimeMillis() - start;
-			// int target_delta = 15;
+
+			// if (Controls.getInstance().wasF5())
+			// TARGET_DELTA = (TARGET_DELTA + 5) % 100;
+
 
 			if (timepassed < TARGET_DELTA) {
 				try {
@@ -82,7 +85,7 @@ public class Canvas extends java.awt.Canvas implements Runnable {
 		game.render(g);
 
 		g.setColor(Color.red);
-		// g.drawText("FPS: " + fps, WIDTH - 80, 20, Graphics.font_20);
+		g.drawText("FPS: " + fps, WIDTH - 60, 14, Graphics.font_14);
 
 		g.dispose();
 		Toolkit.getDefaultToolkit().sync();

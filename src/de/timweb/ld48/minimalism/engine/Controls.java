@@ -17,6 +17,7 @@ public class Controls implements KeyListener {
 	private int				space		= 0;
 
 	private boolean			wasEnter;
+	private boolean			wasF5;
 	private boolean			wasF12;
 	private boolean			wasR;
 
@@ -44,6 +45,9 @@ public class Controls implements KeyListener {
 			break;
 		case KeyEvent.VK_F12:
 			wasF12 = true;
+			break;
+		case KeyEvent.VK_F5:
+			wasF5 = true;
 			break;
 		case KeyEvent.VK_R:
 			wasR = true;
@@ -132,6 +136,13 @@ public class Controls implements KeyListener {
 	public boolean wasEnter() {
 		boolean result = wasEnter;
 		wasEnter = false;
+
+		return result;
+	}
+
+	public boolean wasF5() {
+		boolean result = wasF5;
+		wasF5 = false;
 
 		return result;
 	}

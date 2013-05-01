@@ -91,7 +91,7 @@ public class LevelLoader {
 				world.addEntity(new ActionRocketEntity(new Vector2d(x * World.TILE_SIZE, y * World.TILE_SIZE)));
 				break;
 			case '9':
-				tile = Tile.GROUND_INVISIBLE;
+				tile = Tile.AIR;
 				world.addEntity(new SpikeEntity(new Vector2d(x * World.TILE_SIZE, y * World.TILE_SIZE)));
 				break;
 			default:

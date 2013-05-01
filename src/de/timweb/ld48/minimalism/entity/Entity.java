@@ -26,16 +26,20 @@ public abstract class Entity implements Updateable, Renderable {
 	}
 
 	@Override
-	public void update(int delta) {
+	public void update(final int delta) {
 		World world = World.getInstance();
 
-		System.out.println(delta);
-		if (delta > 25)
-			delta += 30;
-		else if (delta > 15)
-			delta += 10;
+		// if (delta > 40)
+		// delta += 120;
+		// else if (delta > 30)
+		// delta += 70;
+		// else if (delta > 24)
+		// delta += 35;
+		// else if (delta > 15)
+		// delta += 10;
+		// System.out.println("         " + delta);
 
-		gravity.add(0, world.getGravity() * delta);
+		gravity.add(0, 0.00087 * delta);
 	}
 
 	protected boolean move(final int delta) {
@@ -59,7 +63,8 @@ public abstract class Entity implements Updateable, Renderable {
 
 			if (isGravityValid && isGravityEffected) {
 				target.set(pos);
-				target.add(0, gravity.y / STEPS);
+				target.add(0, (gravity.y * delta) / STEPS);
+				// System.out.println(gravity.y);
 				isGravityValid = world.isValidPos(target, this);
 			}
 			if (isGravityValid && isGravityEffected) {
